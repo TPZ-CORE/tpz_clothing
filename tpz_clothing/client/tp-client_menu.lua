@@ -266,7 +266,13 @@ function OpenCharacterOutfitCustomization(actionType)
                     if data.current.value <= 0 then
 
                         Citizen.InvokeNative(0xD710A5007C2AC539, _player, MP.DefaultHashList[tag], 0)
-                        exports.tpz_characters:updateVariation(_player)
+
+                        if tag == 'gunbelts' then
+                            Citizen.InvokeNative(0xD710A5007C2AC539, _player, 0x3F1F01E5, 0) 
+                            Citizen.InvokeNative(0xD710A5007C2AC539, _player, 0xDA0E2C55, 0) 
+                        end
+
+                        UpdateVariation(_player)
                         
                         ClothingList[tag].current = -1
                         SkinData[tag] = -1
@@ -277,7 +283,7 @@ function OpenCharacterOutfitCustomization(actionType)
                         local hash = clothingData.hash
 
                         Citizen.InvokeNative(0xD3A7B003ED343FD9, _player, hash, true, true, true)
-                        exports.tpz_characters:updateVariation(_player)
+                        UpdateVariation(_player)
 
                         if Config.Debug then
                             print("changed " .. tag .. ", to the following Hash Dec Signed: " .. clothingData.hashDecSigned )
@@ -398,20 +404,22 @@ function OpenSelectedWardrobeById(outfitId, outfitName, skinComp)
                     local hash         = clothingData.hash
     
                     Citizen.InvokeNative(0xD3A7B003ED343FD9, ped, hash, true, true, true)
-                    exports.tpz_characters:updateVariation(ped)
+                    UpdateVariation(ped)
    
                 end
 
                 if tonumber(decodedSkinComp[cloth.tag]) == 0 or tonumber(decodedSkinComp[cloth.tag]) == -1 then
+                    
                     Citizen.InvokeNative(0xD710A5007C2AC539, ped, MP.DefaultHashList[cloth.tag], 0)
-                    exports.tpz_characters:updateVariation(ped)
+
+                    if cloth.tag == 'gunbelts' then
+                        Citizen.InvokeNative(0xD710A5007C2AC539, ped, 0x3F1F01E5, 0) 
+                        Citizen.InvokeNative(0xD710A5007C2AC539, ped, 0xDA0E2C55, 0) 
+                    end
+
+                    UpdateVariation(ped)
                 end
 
-                if cloth.tag == "gunbelts" and (tonumber(decodedSkinComp[cloth.tag]) == 0 or tonumber(decodedSkinComp[cloth.tag]) == -1) then
-                    Citizen.InvokeNative(0xD710A5007C2AC539, ped, MP.DefaultHashList["gunbelts"], 1)
-                    exports.tpz_characters:updateVariation(ped)
-                end
-        
             end
 
             MenuData.CloseAll()
