@@ -1,4 +1,5 @@
-local MP = exports.tpz_characters.getMPConfiguration() -- Returns tpz_characters MP Configuration file.
+local MP             = exports.tpz_characters.getMPConfiguration() -- Returns tpz_characters MP Configuration file.
+local ClothHashNames = exports.tpz_characters.getClothHashNamesList()
 
 local MenuData = {}
 
@@ -20,65 +21,60 @@ local GetGender = function ()
     if IsPedMale(PlayerPedId()) then return "male" else return "female" end
 end
 
-local LoadSelectedListResults = function(_type, sex) 
-    local maxIndex = 0
-
-    _type = string.lower(_type)
-
-    local ClothHashNames = exports.tpz_characters.getClothHashNamesList()
-
-    for index, type in pairs (ClothHashNames) do
-
-        if string.lower(type.category_hashname) == _type and type.is_multiplayer and type.ped_type == sex then
-
-            if not MP.BlackListedHashDecSigns[type.hash_dec_signed] then
-
-                maxIndex                                            = maxIndex + 1
-                ClothingList[_type .. "-".. maxIndex]               = {}
-                ClothingList[_type .. "-".. maxIndex].hash          = type.hash
-                ClothingList[_type .. "-".. maxIndex].hashDecSigned = tonumber(type.hash_dec_signed)
-                ClothingList[_type .. "-".. maxIndex].index         = maxIndex
-
-            end
-
-        end
-
-    end
-
-    ClothingList[_type]         = {}
-    ClothingList[_type].current = -1
-    ClothingList[_type].max     = maxIndex
-    ClothingList[_type].tag     = _type
-
-end
-
-local LoadSkinData = function(_type)
-
-    _type = string.lower(_type)
+local LoadSelectedListResults = function(sex)
 
     TriggerEvent("tpz_core:ExecuteServerCallBack", "tpz_clothing:getPlayerDefaultOutfit", function(data)
 
         local skin = json.decode(data)
+        SkinData   = skin
 
-        if skin[_type] then
-            SkinData[_type] = skin[_type]
+        for index, type in pairs (ClothHashNames) do
 
-            ClothingList[_type].current = SkinData[_type]
+            if type.is_multiplayer and type.ped_type == sex and type.category_hashname ~= nil and type.category_hashname ~= "" then
+    
+                if not MP.BlackListedHashDecSigns[type.hash_dec_signed] then
+
+                    local _type = string.lower(type.category_hashname)
+
+                    if ClothingList[_type] == nil then
+                        ClothingList[_type]         = {}
+                        ClothingList[_type].tag     = _type
+
+                        ClothingList[_type].list    = {}
+                        ClothingList[_type].max     = 0
+                        ClothingList[_type].current = -1
+                    end
+
+                    ClothingList[_type].max = ClothingList[_type].max + 1
+
+                    ClothingList[_type].list[ClothingList[_type].max]               = {}
+                    ClothingList[_type].list[ClothingList[_type].max].hash          = type.hash
+                    ClothingList[_type].list[ClothingList[_type].max].hashDecSigned = tonumber(type.hash_dec_signed)
+
+                    if skin[_type] and tonumber(skin[_type]) == tonumber(type.hash_dec_signed) then
+                        ClothingList[_type].current = ClothingList[_type].max
+                    end
+
+                    ClothingList[tonumber(type.hash_dec_signed)] = type.hash
+
+                    print(_type, ClothingList[_type].max)
+
+                end
+    
+            end
+    
         end
-
+        
     end)
 
 end
 
 local CloseMenuProperly = function()
-    local player = PlayerPedId()
+    MenuData.CloseAll()
 
     DestroyAllCams(true)
 
-    MenuData.CloseAll()
-
-    ClientData.IsBusy = false
-    TaskStandStill(player, 1)
+    TaskStandStill(PlayerPedId(), 1)
 
     if Config.HideHUD then ExecuteCommand(Config.HideHUD) end
 
@@ -87,8 +83,8 @@ local CloseMenuProperly = function()
     local dict = Config.HandsUpAnimation.Dict
     local body = Config.HandsUpAnimation.Body
 
-    if IsEntityPlayingAnim(player, dict, body, 3) then
-        ClearPedTasks(player)
+    if IsEntityPlayingAnim(PlayerPedId(), dict, body, 3) then
+        ClearPedTasks(PlayerPedId())
         RemoveAnimDict(dict)
     end
 
@@ -96,22 +92,8 @@ local CloseMenuProperly = function()
     SkinData           = {}
 
     LoadedSkinData     = false
-end
 
--- We load customization elements (ONLY Clothing) directly from tpz_characters.
-function LoadCustomizationElements()
-    local sex = GetGender()
-
-    for __, customization in pairs (MP.CustomizationElements) do
-
-        if customization.action == 'clothing' then
-            LoadSelectedListResults(customization.tag, sex)
-        end
-
-    end
-
-    ClientData.Loaded = true
-
+    ClientData.IsBusy = false
 end
 
 -----------------------------------------------------------
@@ -119,8 +101,7 @@ end
 -----------------------------------------------------------
 
 function OpenCharacterCustomization()
-
-    ClientData.IsBusy = true
+    ClientData.IsBusy       = true
     ClientData.HasStoreOpen = true
 
     local _player = PlayerPedId()
@@ -129,15 +110,7 @@ function OpenCharacterCustomization()
     if not LoadedSkinData then
 
         LoadedSkinData = true
-
-        for __, customization in pairs (MP.CustomizationElements) do
-
-            if customization.action == 'clothing' then
-                LoadSkinData(customization.tag)
-            end
-    
-        end
-
+        LoadSelectedListResults(GetGender())
     end
 
     Wait(250)
@@ -214,7 +187,7 @@ function OpenCharacterOutfitCustomization(actionType)
 
     for _, element in pairs (MP.CustomizationElements) do
 
-        if element.action == 'clothing' then
+        if element.action == 'clothing' and ClothingList[element.tag] then
 
             element.desc = Locales['TOTAL_TYPES'] .. element.label .. " : " .. ClothingList[element.tag].max
 
@@ -277,7 +250,7 @@ function OpenCharacterOutfitCustomization(actionType)
 
                     elseif data.current.value > 0 then
 
-                        local clothingData = ClothingList[tag .. "-" .. data.current.value]
+                        local clothingData = ClothingList[tag].list[data.current.value]
                         local hash = clothingData.hash
 
                         Citizen.InvokeNative(0xD3A7B003ED343FD9, _player, hash, true, true, true)
@@ -287,7 +260,7 @@ function OpenCharacterOutfitCustomization(actionType)
                             print("changed " .. tag .. ", to the following Hash Dec Signed: " .. clothingData.hashDecSigned )
                         end
         
-                        ClothingList[tag].current = clothingData.index
+                        ClothingList[tag].current = data.current.value
                         SkinData[tag] = clothingData.hashDecSigned
 
                     end
@@ -310,8 +283,6 @@ function OpenWardrobe()
     MenuData.CloseAll()
 
     local player = PlayerPedId()
-
-    ClientData.IsBusy = true
 
     TaskStandStill(player, -1)
 
@@ -339,8 +310,9 @@ function OpenWardrobe()
 
             if (data.current == "backup") or (data.current.value == 'exit') then
                 MenuData.CloseAll()
-                ClientData.IsBusy = false
+
                 TaskStandStill(player, 1)
+
                 return
             end
 
@@ -350,8 +322,9 @@ function OpenWardrobe()
         end,
         function(data, menu)
             MenuData.CloseAll()
-            ClientData.IsBusy = false
+
             TaskStandStill(player, 1)
+
         end)
 
     end)
@@ -393,34 +366,44 @@ function OpenSelectedWardrobeById(outfitId, outfitName, skinComp)
             local ped = PlayerPedId()
 
             local decodedSkinComp = json.decode(skinComp)
-            
-            for index, cloth in pairs (ClothingList) do
+
+            for _, cloth in pairs (MP.CustomizationElements) do
 
                 if decodedSkinComp[cloth.tag] and tonumber(decodedSkinComp[cloth.tag]) ~= -1 then
 
-                    local hash = decodedSkinComp[cloth.tag]
-
-                    Citizen.InvokeNative(0xD3A7B003ED343FD9, ped, hash, true, true, true)
-                    UpdateVariation(ped)
-   
+                    Citizen.InvokeNative(0xD3A7B003ED343FD9, ped, tonumber(decodedSkinComp[cloth.tag]), true, true, true)
                 end
-
-                if tonumber(decodedSkinComp[cloth.tag]) == 0 or tonumber(decodedSkinComp[cloth.tag]) == -1 then
-                    
+        
+                if decodedSkinComp[cloth.tag] == 0 or decodedSkinComp[cloth.tag] == -1 then
                     Citizen.InvokeNative(0xD710A5007C2AC539, ped, MP.DefaultHashList[cloth.tag], 0)
-
+        
                     if cloth.tag == 'gunbelts' then
                         Citizen.InvokeNative(0xD710A5007C2AC539, ped, 0x3F1F01E5, 0) 
                         Citizen.InvokeNative(0xD710A5007C2AC539, ped, 0xDA0E2C55, 0) 
                     end
 
-                    UpdateVariation(ped)
                 end
 
             end
 
+            -- We manually load pants, vests and hats because they don't load properly when looped and loaded
+            -- before some other clothing types.
+            if decodedSkinComp["pants"] ~= 0 and decodedSkinComp["pants"] ~= -1 then
+                Citizen.InvokeNative(0xD3A7B003ED343FD9, ped, tonumber(decodedSkinComp["pants"]), true, true, true)
+            end
+
+            if decodedSkinComp["vests"] ~= 0 and decodedSkinComp["vests"] ~= -1 then
+                Citizen.InvokeNative(0xD3A7B003ED343FD9, ped, tonumber(decodedSkinComp["vests"]), true, true, true)
+            end
+
+            if decodedSkinComp["hats"] ~= 0 and decodedSkinComp["hats"] ~= -1 then
+                Citizen.InvokeNative(0xD3A7B003ED343FD9, ped, tonumber(decodedSkinComp["hats"]), true, true, true)
+            end
+            
+            UpdateVariation(ped)
+
             MenuData.CloseAll()
-            ClientData.IsBusy = false
+
             TaskStandStill(ped, 1)
 
         elseif data.current.value == 'rename' then
@@ -460,7 +443,7 @@ function OpenSelectedWardrobeById(outfitId, outfitName, skinComp)
             SendNotification(nil, Locales['DELETED_OUTFIT'], "success")
 
             MenuData.CloseAll()
-            ClientData.IsBusy = false
+
             TaskStandStill(PlayerPedId(), 1)
         end
 
