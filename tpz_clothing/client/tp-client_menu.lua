@@ -165,7 +165,7 @@ function OpenCharacterCustomization()
     function(data, menu)
 
         if (data.current == "backup") then
-            --CloseMenuProperly() -- DOES NOT SAVE
+            CloseMenuProperly() -- DOES NOT SAVE
             return
         end
 
@@ -201,7 +201,7 @@ function OpenCharacterCustomization()
     end,
 
     function(data, menu)
-        --CloseMenuProperly() -- DOES NOT SAVE
+        CloseMenuProperly() -- DOES NOT SAVE
     end)
 
 end
