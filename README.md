@@ -19,6 +19,7 @@
 
 ```lua
 TriggerEvent("tpz_clothing:openWardrobe") -- Client Side
+
 TriggerClientEvent("tpz_clothing:openWardrobe", source) -- Server Side
 ```
 
