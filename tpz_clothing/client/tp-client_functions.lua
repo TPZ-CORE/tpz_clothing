@@ -152,6 +152,27 @@ end
  General
 ]]---------------------------------------------------------
 
+IsPedReadyToRender = function()
+    Citizen.InvokeNative(0xA0BC8FAED8CFEB3C, PlayerPedId())
+    while not Citizen.InvokeNative(0xA0BC8FAED8CFEB3C, PlayerPedId()) do
+        Citizen.InvokeNative(0xA0BC8FAED8CFEB3C, PlayerPedId())
+        Wait(0)
+    end
+end
+
+UpdateVariation = function(ped)
+    Citizen.InvokeNative(0xCC8CA3E88256E58F, ped, false, true, true, true, false)
+    IsPedReadyToRender()
+end
+
+ApplyComponentToPed = function(ped, comp)
+
+    Citizen.InvokeNative(0xD3A7B003ED343FD9, ped, comp, false, true, true)
+    Citizen.InvokeNative(0x66b957aac2eaaeab, ped, comp, 0, 0, 1, 1) -- _UPDATE_SHOP_ITEM_WEARABLE_STATE
+    Citizen.InvokeNative(0xAAB86462966168CE, ped, 1)
+    UpdateVariation(ped)
+end
+
 StartCam = function(x, y, z, rotx, roty, rotz, fov)
 
 	Citizen.InvokeNative(0x17E0198B3882C2CB, PlayerPedId())
