@@ -266,7 +266,7 @@ function OpenCharacterOutfitCustomization(actionType)
                     if data.current.value <= 0 then
 
                         Citizen.InvokeNative(0xD710A5007C2AC539, _player, MP.DefaultHashList[tag], 0)
-                        UpdateVariation(_player)
+                        exports.tpz_characters:updateVariation(_player)
                         
                         ClothingList[tag].current = -1
                         SkinData[tag] = -1
@@ -277,7 +277,7 @@ function OpenCharacterOutfitCustomization(actionType)
                         local hash = clothingData.hash
 
                         Citizen.InvokeNative(0xD3A7B003ED343FD9, _player, hash, true, true, true)
-                        UpdateVariation(_player)
+                        exports.tpz_characters:updateVariation(_player)
 
                         if Config.Debug then
                             print("changed " .. tag .. ", to the following Hash Dec Signed: " .. clothingData.hashDecSigned )
@@ -398,18 +398,18 @@ function OpenSelectedWardrobeById(outfitId, outfitName, skinComp)
                     local hash         = clothingData.hash
     
                     Citizen.InvokeNative(0xD3A7B003ED343FD9, ped, hash, true, true, true)
-                    UpdateVariation(ped)
+                    exports.tpz_characters:updateVariation(ped)
    
                 end
 
                 if tonumber(decodedSkinComp[cloth.tag]) == 0 or tonumber(decodedSkinComp[cloth.tag]) == -1 then
                     Citizen.InvokeNative(0xD710A5007C2AC539, ped, MP.DefaultHashList[cloth.tag], 0)
-                    UpdateVariation(ped)
+                    exports.tpz_characters:updateVariation(ped)
                 end
 
                 if cloth.tag == "gunbelts" and (tonumber(decodedSkinComp[cloth.tag]) == 0 or tonumber(decodedSkinComp[cloth.tag]) == -1) then
                     Citizen.InvokeNative(0xD710A5007C2AC539, ped, MP.DefaultHashList["gunbelts"], 1)
-                    UpdateVariation(ped)
+                    exports.tpz_characters:updateVariation(ped)
                 end
         
             end
