@@ -1,7 +1,5 @@
 Config = {}
 
-Config.DevMode = false
-
 Config.Keys = { 
     ["A"] = 0x7065027D, ["D"] = 0xB4E465B4, ['R'] = 0xE30CD707, ['G'] = 0x760A9C6F, ["ENTER"] = 0xC7B5340A, 
     ["SPACEBAR"] = 0xD9D0E1C0, ['BACKSPACE'] = 0x156F7119, ["W"] = 0x8FD015D8, ["S"] = 0xD27782E3,
