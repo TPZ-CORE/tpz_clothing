@@ -283,6 +283,7 @@ function OpenWardrobe()
     local player = PlayerPedId()
 
     TaskStandStill(player, -1)
+    ClientData.IsBusy = true
 
     TriggerEvent("tpz_core:ExecuteServerCallBack", "tpz_clothing:getPlayerOutfits", function(outfits)
 
@@ -310,7 +311,7 @@ function OpenWardrobe()
                 MenuData.CloseAll()
 
                 TaskStandStill(player, 1)
-
+                ClientData.IsBusy = false
                 return
             end
 
@@ -322,7 +323,7 @@ function OpenWardrobe()
             MenuData.CloseAll()
 
             TaskStandStill(player, 1)
-
+            ClientData.IsBusy = false
         end)
 
     end)
