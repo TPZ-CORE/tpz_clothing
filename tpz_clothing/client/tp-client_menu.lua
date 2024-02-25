@@ -56,9 +56,7 @@ local LoadSelectedListResults = function(sex)
                     end
 
                     ClothingList[tonumber(type.hash_dec_signed)] = type.hash
-
-                    print(_type, ClothingList[_type].max)
-
+                        
                 end
     
             end
