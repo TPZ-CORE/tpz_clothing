@@ -35,9 +35,7 @@ local LoadSelectedListResults = function(_type, sex)
 
                 maxIndex                                            = maxIndex + 1
                 ClothingList[_type .. "-".. maxIndex]               = {}
-                ClothingList[_type .. "-".. maxIndex].hashName      = type.hashname
                 ClothingList[_type .. "-".. maxIndex].hash          = type.hash
-                ClothingList[_type .. "-".. maxIndex].hashToString  = tostring(type.hash)
                 ClothingList[_type .. "-".. maxIndex].hashDecSigned = tonumber(type.hash_dec_signed)
                 ClothingList[_type .. "-".. maxIndex].index         = maxIndex
 
@@ -290,7 +288,7 @@ function OpenCharacterOutfitCustomization(actionType)
                         end
         
                         ClothingList[tag].current = clothingData.index
-                        SkinData[tag] = clothingData.index
+                        SkinData[tag] = clothingData.hashDecSigned
 
                     end
                 end
@@ -400,9 +398,8 @@ function OpenSelectedWardrobeById(outfitId, outfitName, skinComp)
 
                 if decodedSkinComp[cloth.tag] and tonumber(decodedSkinComp[cloth.tag]) ~= -1 then
 
-                    local clothingData = ClothingList[cloth.tag .. "-" .. decodedSkinComp[cloth.tag]]
-                    local hash         = clothingData.hash
-    
+                    local hash = decodedSkinComp[cloth.tag]
+
                     Citizen.InvokeNative(0xD3A7B003ED343FD9, ped, hash, true, true, true)
                     UpdateVariation(ped)
    
