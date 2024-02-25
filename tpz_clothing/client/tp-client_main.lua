@@ -23,12 +23,6 @@ end)
 -----------------------------------------------------------
 --[[ Events ]]--
 -----------------------------------------------------------
-
--- Loaded the LoadCustomizationElements function on character select.
-AddEventHandler("tpz_core:isPlayerReady", function()
-    LoadCustomizationElements()
-end)
-
  
 RegisterNetEvent("tpz_clothing:openWardrobe")
 AddEventHandler("tpz_clothing:openWardrobe", function()
@@ -48,25 +42,7 @@ AddEventHandler("tpz_clothing:openWardrobe", function()
 
 end)
 
-if Config.DevMode then
 
-    Citizen.CreateThread(function ()
- 
-        Wait(2000)
- 
-        TriggerEvent("tpz_core:ExecuteServerCallBack", "tpz_core:getPlayerData", function(data)
-        
-            -- We get the player data to check if player has loaded or not before calling LoadCustomizationElements() function.
-            if data == nil then
-                return
-            end
-
-           LoadCustomizationElements()
-        end)
-
-    end)
-
-end
 -----------------------------------------------------------
 --[[ Threads ]]--
 -----------------------------------------------------------
