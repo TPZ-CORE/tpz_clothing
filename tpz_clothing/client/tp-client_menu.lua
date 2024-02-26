@@ -404,6 +404,7 @@ function OpenSelectedWardrobeById(outfitId, outfitName, skinComp)
             MenuData.CloseAll()
 
             TaskStandStill(ped, 1)
+            ClientData.IsBusy = false
 
         elseif data.current.value == 'rename' then
 
@@ -444,6 +445,7 @@ function OpenSelectedWardrobeById(outfitId, outfitName, skinComp)
             MenuData.CloseAll()
 
             TaskStandStill(PlayerPedId(), 1)
+            ClientData.IsBusy = false
         end
 
 
