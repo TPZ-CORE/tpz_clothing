@@ -104,6 +104,8 @@ end
 -----------------------------------------------------------
 
 function OpenCharacterCustomization()
+    MenuData.CloseAll()
+    
     ClientData.IsBusy       = true
     ClientData.HasStoreOpen = true
 
@@ -226,7 +228,6 @@ function OpenCharacterOutfitCustomization(actionType)
 
             if (data.current == "backup") then
                 OpenCharacterCustomization()
-                menu.close()
                 return
             end
 
@@ -274,7 +275,7 @@ function OpenCharacterOutfitCustomization(actionType)
 
         end,
     function(data, menu)
-        menu.close()
+        OpenCharacterCustomization()
     end)
 end
 
