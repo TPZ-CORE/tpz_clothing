@@ -62,6 +62,8 @@ local LoadSelectedListResults = function(sex)
             end
     
         end
+
+        LoadedSkinData = true
         
     end)
 
@@ -90,6 +92,9 @@ local CloseMenuProperly = function()
     SkinData           = {}
 
     LoadedSkinData     = false
+    
+    ClothingList       = nil
+    ClothingList       = {}
 
     ClientData.IsBusy = false
 end
@@ -106,12 +111,12 @@ function OpenCharacterCustomization()
     TaskStandStill(_player, -1)
 
     if not LoadedSkinData then
-
-        LoadedSkinData = true
         LoadSelectedListResults(GetGender())
     end
 
-    Wait(250)
+    while not LoadedSkinData do
+        Wait(250)
+    end
 
     local elements = {
 
