@@ -18,7 +18,7 @@ end
 -----------------------------------------------------------
 
 
-exports.tpz_core:rServerAPI().addNewCallBack("tpz_clothing:getPlayerDefaultOutfit", function(source, cb)
+exports.tpz_core:server().addNewCallBack("tpz_clothing:getPlayerDefaultOutfit", function(source, cb)
 	local _source         = source
 
 	local xPlayer         = TPZ.GetPlayer(_source)
@@ -31,7 +31,7 @@ exports.tpz_core:rServerAPI().addNewCallBack("tpz_clothing:getPlayerDefaultOutfi
 	end)
 end)
 
-exports.tpz_core:rServerAPI().addNewCallBack("tpz_clothing:getPlayerOutfits", function(source, cb, data)
+exports.tpz_core:server().addNewCallBack("tpz_clothing:getPlayerOutfits", function(source, cb, data)
 	local _source         = source
 
 	local xPlayer         = TPZ.GetPlayer(_source)
