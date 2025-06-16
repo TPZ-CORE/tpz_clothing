@@ -17,7 +17,7 @@ TPZ.addNewCallBack("tpz_clothing:callbacks:getPlayerDefaultOutfit", function(sou
 	end)
 end)
 
-TPZ.addNewCallBack("tpz_clothing:callbacks:getPlayerOutfits", function(source, cb, data)
+TPZ.addNewCallBack("tpz_clothing:callbacks:getPlayerOutfits", function(source, cb)
 	local _source         = source
 
 	local xPlayer         = TPZ.GetPlayer(_source)
