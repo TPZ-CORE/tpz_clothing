@@ -1,24 +1,10 @@
-local TPZ    = {}
-
-TriggerEvent("getTPZCore", function(cb) TPZ = cb end)
-
------------------------------------------------------------
---[[ Functions  ]]--
------------------------------------------------------------
-
--- @GetTableLength returns the length of a table.
-local GetTableLength = function(T)
-    local count = 0
-    for _ in pairs(T) do count = count + 1 end
-    return count
-end
+local TPZ = exports.tpz_core:getCoreAPI()
 
 -----------------------------------------------------------
 --[[ Callbacks  ]]--
 -----------------------------------------------------------
 
-
-exports.tpz_core:server().addNewCallBack("tpz_clothing:getPlayerDefaultOutfit", function(source, cb)
+TPZ.addNewCallBack("tpz_clothing:callbacks:getPlayerDefaultOutfit", function(source, cb)
 	local _source         = source
 
 	local xPlayer         = TPZ.GetPlayer(_source)
@@ -31,27 +17,20 @@ exports.tpz_core:server().addNewCallBack("tpz_clothing:getPlayerDefaultOutfit", 
 	end)
 end)
 
-exports.tpz_core:server().addNewCallBack("tpz_clothing:getPlayerOutfits", function(source, cb, data)
+TPZ.addNewCallBack("tpz_clothing:callbacks:getPlayerOutfits", function(source, cb, data)
 	local _source         = source
 
 	local xPlayer         = TPZ.GetPlayer(_source)
-	local identifier      = xPlayer.getIdentifier()
-	local charidentifier  = xPlayer.getCharacterIdentifier()
+	local charIdentifier  = xPlayer.getCharacterIdentifier()
 
 	local outfits         = {}
 
-    exports["ghmattimysql"]:execute("SELECT * FROM " .. data.type, {}, function(result)
+    exports["ghmattimysql"]:execute("SELECT * FROM `outfits` WHERE `charidentifier` = @charidentifier, { ["charidentifier"] = charIdentifier }, function(result)
 
-        local length = GetTableLength(result)
-
-        if length > 0 then
+        if TPZ.GetTableLength(result) > 0 then
 
             for _, res in pairs (result) do
-
-				if res.identifier == identifier and res.charidentifier == charidentifier then
-					table.insert(outfits, res)
-				end
-
+                table.insert(outfits, res)
 			end
 
 		end
