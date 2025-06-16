@@ -58,7 +58,7 @@ Citizen.CreateThread(function()
         local player       = PlayerPedId()
         local isPlayerDead = IsEntityDead(player)
 
-        if not isPlayerDead and not ClientData.IsBusy then
+        if not isPlayerDead and not PlayerData.IsBusy then
             local coords = GetEntityCoords(player)
 
             for locId, locationConfig in pairs(Config.Stores) do
@@ -145,7 +145,7 @@ Citizen.CreateThread(function()
         local player       = PlayerPedId()
         local isPlayerDead = IsEntityDead(player)
 
-        if not isPlayerDead and not ClientData.IsBusy then
+        if not isPlayerDead and not PlayerData.IsBusy then
             local coords = GetEntityCoords(player)
 
             for locId, locationConfig in pairs(Config.Wardrobes) do
