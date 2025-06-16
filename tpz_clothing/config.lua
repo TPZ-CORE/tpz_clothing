@@ -28,8 +28,6 @@ Config.HandsUpAnimation = {
     Body = "handsup_register_owner",
 }
 
-Config.HideHUD = "hud:hideall" -- Command to hide HUD for cleanest NUI Display (Set to false if you don't want to execute any command)
-
 -----------------------------------------------------------
 --[[ Clothing Store Locations ]]--
 -----------------------------------------------------------
@@ -227,14 +225,19 @@ Config.Wardrobes = {
 --[[ Notification Functions  ]]--
 -----------------------------------------------------------
 
--- @param source is always null when called from client.
--- @param messageType returns "success" or "error" depends when and where the message is sent.
-function SendNotification(source, message, messageType)
+-- @param source : The source always null when called from client.
+-- @param type   : returns "error", "success", "info"
+-- @param duration : the notification duration in milliseconds
+function SendNotification(source, message, type, duration)
+
+	if not duration then
+		duration = 3000
+	end
 
     if not source then
-        TriggerEvent('tpz_core:sendRightTipNotification', message, 3000)
+        TriggerEvent('tpz_core:sendBottomTipNotification', message, duration)
     else
-        TriggerClientEvent('tpz_core:sendRightTipNotification', source, message, 3000)
+        TriggerClientEvent('tpz_core:sendBottomTipNotification', source, message, duration)
     end
   
 end
