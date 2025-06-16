@@ -113,6 +113,7 @@ Config.Stores = {
 --[[ Default Wardrobe Locations ]]--
 -----------------------------------------------------------
 
+-- Public wardrobe locations that can be found on the world map. 
 Config.Wardrobes = {
 
     ['Valentine'] = {
