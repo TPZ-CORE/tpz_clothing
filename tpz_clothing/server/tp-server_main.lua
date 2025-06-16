@@ -11,11 +11,39 @@ local ClothesList = {} -- Required for saving and loading purchased clothes.
 --[[ Events  ]]--
 -----------------------------------------------------------
 
+RegisterServerEvent("tpz_clothing:server:request")
+AddEventHandler("tpz_clothing:server:request", function()
+    local _source        = source
+
+    local xPlayer        = TPZ.GetPlayer(_source)
+    local charIdentifier = xPlayer.getCharacterIdentifier()
+
+    exports["ghmattimysql"]:execute("SELECT `boughtOutfitComps` FROM `characters` WHERE `charidentifier` = @charidentifier", { ['charidentifier'] = charIdentifier }, function(result)
+		
+        if not result or result and not result[1].boughtOutfitComps then
+            print("^1[WARNING] - boughtOutfitComps column does not exist on characters table")
+            return
+        end
+
+        ClothesList[charIdentifier] = {}
+
+        local boughtComps = json.decode(result[1].boughtOutfitComps)
+
+        if boughtComps and TPZ.GetTableLength(boughtComps) > 0 then
+            ClothesList[charIdentifier] = boughtComps
+        end
+
+        TriggerClientEvent("tpz_clothing:client:update", _source, ClothesList[charIdentifier])
+		
+    end)
+
+end)
+
 RegisterServerEvent("tpz_clothing:server:buy")
 AddEventHandler("tpz_clothing:server:buy", function(category, index)
-    local _source = source
+    local _source        = source
 
-    local xPlayer       = TPZ.GetPlayer(_source)
+    local xPlayer        = TPZ.GetPlayer(_source)
     local charIdentifier = xPlayer.getCharacterIdentifier()
 
     if Config.OutfitCategories[category] == nil then
@@ -28,10 +56,6 @@ AddEventHandler("tpz_clothing:server:buy", function(category, index)
     if currentMoney < OutfitData.Cost then
         SendNotification(_source, Locales["NOT_ENOUGH_MONEY"], "error")
         return
-    end
-
-    if ClothesList[charIdentifier] == nil then
-        ClothesList[charIdentifier] = {}
     end
 
     -- In case the player has already bought and equipped a cloth from the same category
