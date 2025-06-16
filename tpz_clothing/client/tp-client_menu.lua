@@ -370,7 +370,7 @@ function OpenSelectedWardrobeOutfitById(outfitId, outfitName, skinComp)
     function(data, menu)
 
         if (data.current == "backup") or (data.current.value == 'back') then
-            OpenWardrobeOutfits()
+            OpenWardrobe()
             return
         end
 
@@ -438,7 +438,7 @@ function OpenSelectedWardrobeOutfitById(outfitId, outfitName, skinComp)
                     SendNotification(nil, Locales['RENAMED_OUTFIT'], "success")
 
                     Wait(500)
-                    OpenWardrobeOutfits()
+                    OpenWardrobe()
                 end
 
             end) 
@@ -462,7 +462,7 @@ function OpenSelectedWardrobeOutfitById(outfitId, outfitName, skinComp)
     end,
 
     function(data, menu)
-        OpenWardrobeOutfits()
+        OpenWardrobe()
     end)
 
 
