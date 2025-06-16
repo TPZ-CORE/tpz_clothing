@@ -32,6 +32,10 @@ exports('openWardrobe', function()
 	OpenWardrobe()
 end)
 
+exports('hasMenuActive', function()
+	return PlayerData.IsBusy or PlayerData.HasStoreOpen
+end)
+
 -----------------------------------------------------------
 --[[ Events ]]--
 -----------------------------------------------------------
