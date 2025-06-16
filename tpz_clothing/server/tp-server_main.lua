@@ -51,9 +51,8 @@ AddEventHandler("tpz_clothing:server:buy", function(category, index)
     table.insert(ClothesList[charIdentifier], { category = category, index = index, equipped = 1 })
 
     xPlayer.removeAccount(0, OutfitData.Cost)
-    -- SendNotification
+    SendNotification(_source, string.format(Locales["BOUGHT_CLOTH"], OutfitData.Cost), "success")
 
-    --TriggerClientEvent()
 end)
 
 -- The event is triggered from the store menu for saving an outfit that has been created.
