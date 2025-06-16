@@ -1,7 +1,12 @@
-ClientData = { IsBusy = false, HasStoreOpen = false, StoreType = nil, Loaded = false}
+local PlayerData = { 
+	IsBusy = false, 
+	HasStoreOpen = false, 
+	StoreType = nil, 
+	Loaded = false
+}
 
-local CameraHandler           = {coords = nil, zoom = 0, z = 0 }
-local CurrentHeading          = 0
+local CameraHandler  = {coords = nil, zoom = 0, z = 0 }
+local CurrentHeading = 0
 
 -----------------------------------------------------------
 --[[ Local Functions ]]--
@@ -10,6 +15,14 @@ local CurrentHeading          = 0
 local function AdjustEntityPedHeading(amount)
 	CurrentHeading = CurrentHeading + amount
 	SetPedDesiredHeading(PlayerPedId(), CurrentHeading)
+end
+
+-----------------------------------------------------------
+--[[ Functions ]]--
+-----------------------------------------------------------
+
+function GetPlayerData()
+	return PlayerData
 end
 
 -----------------------------------------------------------
@@ -87,8 +100,6 @@ Citizen.CreateThread(function()
 
                                 CurrentHeading = locationConfig.Coords.h
 
-                                if Config.HideHUD then ExecuteCommand(Config.HideHUD) end
-
                                 local cameraCoords = locationConfig.CameraCoords
                                 StartCam(cameraCoords.x, cameraCoords.y, cameraCoords.z, cameraCoords.rotx, cameraCoords.roty,
                                 cameraCoords.rotz, cameraCoords.zoom)
@@ -99,15 +110,9 @@ Citizen.CreateThread(function()
                                 }
                             
                                 CameraHandler.z    = cameraCoords.z
-                                CameraHandler.zoom = cameraCoords.zoom
-
-                                if locationConfig.ActionType == 'CLOTHING' then
-                                    OpenCharacterCustomization()
-
-                                elseif locationConfig.ActionType == 'MAKEUP' then
-                                    OpenCharacterMakeupCustomization()
-                                end
-
+                                CameraHandler.zoom = cameraCoords.zoom 
+             
+                                OpenCharacterCustomization()
                             end
 
                             Wait(1000)
