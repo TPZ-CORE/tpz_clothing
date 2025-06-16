@@ -6,6 +6,13 @@ local ClothesList = {} -- Required for saving and loading purchased clothes.
 --[[ Base Events  ]]--
 -----------------------------------------------------------
 
+AddEventHandler('onResourceStop', function(resourceName)
+	if (GetCurrentResourceName() ~= resourceName) then
+    return
+  end
+
+  ClothesList = nil
+end)
 
 -----------------------------------------------------------
 --[[ Events  ]]--
