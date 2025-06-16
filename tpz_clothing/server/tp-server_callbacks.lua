@@ -35,6 +35,8 @@ TPZ.addNewCallBack("tpz_clothing:callbacks:getPlayerOutfits", function(source, c
 					table.insert(outfits, res)
 				end
 
+			end
+
 		end
 
 		return cb(outfits)
