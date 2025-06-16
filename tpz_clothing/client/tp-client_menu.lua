@@ -415,10 +415,7 @@ function OpenSelectedWardrobeOutfitById(outfitId, outfitName, skinComp)
             end
             
             UpdateVariation(ped)
-            MenuData.CloseAll()
-
-            TaskStandStill(ped, 1)
-            PlayerData.IsBusy = false
+            CloseMenuProperly()
 
         elseif data.current.value == 'rename' then
 
@@ -453,9 +450,7 @@ function OpenSelectedWardrobeOutfitById(outfitId, outfitName, skinComp)
             TriggerServerEvent("tpz_clothing:server:deleteOutfit", outfitId)
             SendNotification(nil, Locales['DELETED_OUTFIT'], "success")
 
-            MenuData.CloseAll()
-            TaskStandStill(PlayerPedId(), 1)
-            PlayerData.IsBusy = false
+            CloseMenuProperly()
         end
 
 
