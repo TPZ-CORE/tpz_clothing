@@ -1,8 +1,7 @@
 local PlayerData = { 
-	IsBusy = false, 
+	IsBusy       = false, 
 	HasStoreOpen = false, 
-	StoreType = nil, 
-	Loaded = false
+	Loaded       = false
 }
 
 local CameraHandler  = {coords = nil, zoom = 0, z = 0 }
@@ -93,8 +92,6 @@ Citizen.CreateThread(function()
                         if PromptHasHoldModeCompleted(prompt.prompt) then
 
                             if prompt.type == "OPEN_STORE" then
-
-                                ClientData.StoreType = locationConfig.ActionType
 
                                 SetEntityHeading(player, locationConfig.Coords.h)
 
@@ -213,7 +210,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
 
-        if ClientData.HasStoreOpen then
+        if PlayerData.HasStoreOpen then
             
             local playerPed = PlayerPedId()
 
