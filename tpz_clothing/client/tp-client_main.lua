@@ -24,8 +24,8 @@ end)
 --[[ Events ]]--
 -----------------------------------------------------------
  
-RegisterNetEvent("tpz_clothing:openWardrobe")
-AddEventHandler("tpz_clothing:openWardrobe", function()
+RegisterNetEvent(Config.OpenWardrobeOutfitsEvent)
+AddEventHandler(Config.OpenWardrobeOutfitsEvent, function()
     OpenWardrobe()
 end)
 
