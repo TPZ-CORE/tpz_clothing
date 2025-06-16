@@ -34,7 +34,7 @@ Config.HandsUpAnimation = {
 
 Config.Stores = {
 
-    { -- Saint Denis ( CLOTHING )
+    ["SAINT_DENIS"] = {
 
         Coords = {x = 2555.755, y = -1170.66, z = 53.683, h = 78.336357116699},
 
@@ -57,7 +57,7 @@ Config.Stores = {
         
     },
 
-    { -- Blackwater ( CLOTHING )
+    ["BLACKWATER"] = { 
 
         Coords = {x = -759.990, y = -1294.08, z = 43.835, h = 104.9513473510},
 
