@@ -1,10 +1,46 @@
-local TPZ    = {}
+local TPZ = exports.tpz_core:getCoreAPI()
 
-TriggerEvent("getTPZCore", function(cb) TPZ = cb end)
+local ClothesList = {} -- Required for saving and loading purchased clothes. 
+
+-----------------------------------------------------------
+--[[ Base Events  ]]--
+-----------------------------------------------------------
+
 
 -----------------------------------------------------------
 --[[ Events  ]]--
 -----------------------------------------------------------
+
+RegisterServerEvent("tpz_clothing:server:buy")
+AddEventHandler("tpz_clothing:server:buy", function(category, index)
+    local _source = source
+
+    local xPlayer       = TPZ.GetPlayer(_source)
+    local charIdentifier = xPlayer.getCharacterIdentifier()
+
+    if Config.OutfitCategories[category] == nil then
+        return
+    end
+
+    local OutfitData   = Config.OutfitCategories[category][index]
+    local currentMoney = xPlayer.getAccount(0)
+
+    if currentMoney < OutfitData.Cost then
+        SendNotification(_source, Locales["NOT_ENOUGH_MONEY"], "error")
+        return
+    end
+
+    if ClothesList[charIdentifier] == nil then
+        ClothesList[charIdentifier] = {}
+    end
+
+    table.insert(ClothesList[charIdentifier], { category = category, index = index })
+
+    xPlayer.removeAccount(0, OutfitData.Cost)
+    -- SendNotification
+
+    --TriggerClientEvent()
+end)
 
 -- The event is triggered from the store menu for saving an outfit that has been created.
 RegisterServerEvent("tpz_clothing:save")
