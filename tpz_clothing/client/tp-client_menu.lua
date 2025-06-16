@@ -143,10 +143,9 @@ function OpenCharacterCustomization()
     MenuData.Open('default', GetCurrentResourceName(), 'main',
 
     {
-        title = Locales['CLOTHING_TITLE'],
-
-        subtext = Locales['CUSTOMIZE_CLOTHING_DESCRIPTION'],
-        align = "left",
+        title    = Locales['CLOTHING_TITLE'],
+        subtext  = Locales['CUSTOMIZE_CLOTHING_DESCRIPTION'],
+        align    = "left",
         elements = elements,
         lastmenu = "notMenu"
     },
@@ -173,8 +172,7 @@ function OpenCharacterCustomization()
             TriggerEvent("tpz_inputs:getTextInput", inputData, function(cb)
 
                 if cb ~= "DECLINE" or cb ~= Locales['DECLINE_BUTTON'] then
-                    TriggerServerEvent("tpz_clothing:save", "outfits", cb, SkinData)
-
+                    TriggerServerEvent("tpz_clothing:server:saveOutfit", cb, SkinData)
                     SendNotification(nil, Locales['SAVED_OUTFIT'], "success")
 
                     CloseMenuProperly()
