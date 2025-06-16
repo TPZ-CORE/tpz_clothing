@@ -34,7 +34,21 @@ AddEventHandler("tpz_clothing:server:buy", function(category, index)
         ClothesList[charIdentifier] = {}
     end
 
-    table.insert(ClothesList[charIdentifier], { category = category, index = index })
+    -- In case the player has already bought and equipped a cloth from the same category
+    -- we try to find it and set it to not-equipped. 
+    if TPZ.GetTableLength(ClothesList[charIdentifier]) > 0 then
+
+        for index, cloth in pairs (ClothesList[charIdentifier]) do
+
+            if cloth.category == category then
+                cloth.equipped = 0
+            end
+
+        end
+
+    end
+
+    table.insert(ClothesList[charIdentifier], { category = category, index = index, equipped = 1 })
 
     xPlayer.removeAccount(0, OutfitData.Cost)
     -- SendNotification
