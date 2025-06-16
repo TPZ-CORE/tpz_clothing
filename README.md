@@ -21,6 +21,8 @@ TriggerEvent("tpz_clothing:client:openWardrobeOutfits") -- Client - Client
 TriggerClientEvent("tpz_clothing:client:openWardrobeOutfits", source) -- Server > Client
 ```
 
+- The specified event name can be modified through the configuration file. 
+
 ### Exports
 
 | Exports                              | Description                                                  |
