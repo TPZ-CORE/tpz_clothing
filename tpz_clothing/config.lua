@@ -53,34 +53,8 @@ Config.Stores = {
             RGBA = {r = 240, g = 230, b = 140, a = 255},
         },
 
-        ActionDistance = 0.8,
-
-        ActionType = "CLOTHING",
+        ActionDistance = 1.2,
         
-    },
-
-    { -- Saint Denis ( MAKEUP )
-
-        Coords = {x = 2548.435, y = -1158.50, z = 53.726, h = 262.8038024902},
-
-        CameraCoords = { x = 2551.079, y = -1160.82, z = 54.124, h = 52.4939613342, roty = 0.0, rotz = 50.0, fov = 60.0, zoom = 68.0},
-        
-        BlipData = {
-            Enabled = true,
-            Title   = "Makeup Store",
-            Sprite  = 1451797164,
-        },
-
-        ActionMarkers = {
-            Enabled = true,
-
-            Distance = 10.0,
-            RGBA = {r = 240, g = 230, b = 140, a = 255},
-        },
-
-        ActionDistance = 0.6,
-
-        ActionType = "MAKEUP",
     },
 
     { -- Blackwater ( CLOTHING )
@@ -102,9 +76,7 @@ Config.Stores = {
             RGBA = {r = 240, g = 230, b = 140, a = 255},
         },
 
-        ActionDistance = 0.8,
-
-        ActionType = "CLOTHING",
+        ActionDistance = 1.2,
     },
 
 }
