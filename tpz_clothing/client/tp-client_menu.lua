@@ -1,19 +1,12 @@
 
 local TPZ             = exports.tpz_core:getCoreAPI()
 local MP              = exports.tpz_characters.getMPConfiguration() -- Returns tpz_characters MP Configuration file.
-local ClothHashNames = exports.tpz_characters.getClothHashNamesList() -- Returns all the cloth hash names list.
+local ClothHashNames  = exports.tpz_characters.getClothHashNamesList() -- Returns all the cloth hash names list.
 
-local MenuData = {}
+local ClothingList     = {}
+local SkinData         = {}
 
-TriggerEvent("tpz_menu_base:getData", function(call)
-    MenuData = call
-end)
-
-
-local ClothingList       = {}
-local SkinData           = {}
-
-local LoadedSkinData = false
+local LoadedSkinData   = false
 
 local BlacklistedTypes = {
     ['eyes'] = true,
@@ -22,7 +15,13 @@ local BlacklistedTypes = {
     ['bodies_lower'] = true,
     ['teeth'] = true,
     ['hair'] = true,
-}
+} 
+
+local MenuData = {}
+
+TriggerEvent("tpz_menu_base:getData", function(call)
+    MenuData = call
+end)
 
 -----------------------------------------------------------
 --[[ Local Functions ]]--
