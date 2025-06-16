@@ -1,3 +1,5 @@
+local TPZ = exports.tpz_core:getCoreAPI()
+
 -- The event is triggered from the store menu for saving an outfit that has been created.
 RegisterServerEvent("tpz_clothing:save")
 AddEventHandler("tpz_clothing:save", function(databaseType, outfitName, skinComp)
