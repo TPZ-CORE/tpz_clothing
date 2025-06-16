@@ -25,13 +25,15 @@ TPZ.addNewCallBack("tpz_clothing:callbacks:getPlayerOutfits", function(source, c
 
 	local outfits         = {}
 
-    exports["ghmattimysql"]:execute("SELECT * FROM `outfits` WHERE `charidentifier` = @charidentifier, { ["charidentifier"] = charIdentifier }, function(result)
+	exports["ghmattimysql"]:execute("SELECT * FROM `outfits`, {}, function(result)
 
-        if TPZ.GetTableLength(result) > 0 then
+		if TPZ.GetTableLength(result) > 0 then
 
-            for _, res in pairs (result) do
-                table.insert(outfits, res)
-			end
+			for _, res in pairs (result) do
+
+				if res.charidentifier == charIdentifier then
+					table.insert(outfits, res)
+				end
 
 		end
 
