@@ -6,7 +6,7 @@ local TPZ = exports.tpz_core:getCoreAPI()
 
 -- The event is triggered from the store menu for saving an outfit that has been created.
 RegisterServerEvent("tpz_clothing:server:save")
-AddEventHandler("tpz_clothing:server:save", function(databaseType, outfitName, skinComp)
+AddEventHandler("tpz_clothing:server:save", function(outfitName, skinComp)
 
 	local _source         = source
 
@@ -66,14 +66,8 @@ end)
 
 RegisterServerEvent("tpz_clothing:server:rename")
 AddEventHandler("tpz_clothing:server:rename", function(outfitId, inputTitle)
-
-    local Parameters = {
-        ["id"]    = outfitId,
-        ['title'] = inputTitle,
-    }
-
+    local Parameters = { ["id"] = outfitId, ['title'] = inputTitle }
     exports.ghmattimysql:execute("UPDATE `outfits` SET `title` = @title WHERE `id` = @id", Parameters)
-
 end)
 
 -- The event is triggered from the wardrobe menu for removing the selected outfitId from outfits database table.
