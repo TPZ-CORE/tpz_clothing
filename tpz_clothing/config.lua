@@ -88,7 +88,7 @@ Config.Stores = {
 -- Public wardrobe locations that can be found on the world map. 
 Config.Wardrobes = {
 
-    ['Valentine'] = {
+    ['VALENTINE'] = {
 
         Coords = {x = -325.114, y = 766.4060, z = 117.43, h = 12.5232944488},
 
@@ -108,7 +108,7 @@ Config.Wardrobes = {
         ActionDistance = 1.2,
     },
 
-    ['Rhodes'] = {
+    ['RHODES'] = {
 
         Coords = {x = 1323.890, y = -1288.67, z = 77.021, h = 0},
 
@@ -128,7 +128,7 @@ Config.Wardrobes = {
         ActionDistance = 1.2,
     },
 
-    ['SaintDenis'] = {
+    ['SAINT_DENIS'] = {
 
         Coords = {x = 2555.864, y = -1160.55, z = 53.701, h = 181.045257568},
 
@@ -148,7 +148,7 @@ Config.Wardrobes = {
         ActionDistance = 1.2,
     },
 
-    ['Blackwater'] = {
+    ['BLACKWATER'] = {
 
         Coords = {x = -767.94,y = -1294.95,z = 43.84, h = 0},
 
@@ -168,7 +168,7 @@ Config.Wardrobes = {
         ActionDistance = 1.2,
     },
 
-    ['Strawberry'] = {
+    ['STRAWBERRY'] = {
 
         Coords = {x = -1794.00, y = -394.872, z = 160.33},
 
