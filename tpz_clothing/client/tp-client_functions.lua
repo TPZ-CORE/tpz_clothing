@@ -1,10 +1,6 @@
 
-Prompts       = GetRandomIntInRange(0, 0xffffff)
-PromptsList   = {}
-
-
-StorePrompts       = GetRandomIntInRange(0, 0xffffff)
-StorePromptsList   = {}
+local Prompts, StorePrompts = GetRandomIntInRange(0, 0xffffff), GetRandomIntInRange(0, 0xffffff)
+local PromptsList, StorePromptsList = {}, {}
 
 --[[-------------------------------------------------------
  Handlers
@@ -13,6 +9,12 @@ StorePromptsList   = {}
 AddEventHandler("onResourceStop", function(resourceName)
     if resourceName ~= GetCurrentResourceName() then
         return
+    end
+
+    local PlayerData = GetPlayerData()
+
+    if PlayerData.IsBusy or PlayerData.HasStoreOpen then
+        DestroyAllCams(true)
     end
 
     for i, v in pairs(Config.Stores) do
@@ -30,7 +32,6 @@ AddEventHandler("onResourceStop", function(resourceName)
     Citizen.InvokeNative(0x00EDE88D4D13CF59, Prompts) -- UiPromptDelete
     Citizen.InvokeNative(0x00EDE88D4D13CF59, StorePrompts) -- UiPromptDelete
 
-    DestroyAllCams(true)
 end)
 
 --[[-------------------------------------------------------
@@ -59,6 +60,10 @@ RegisterPrompts = function()
         table.insert(PromptsList, {prompt = _prompt, type = index })
     end
 
+end
+
+function GetPromptData()
+    return Prompts, PromptsList
 end
 
 CreateStorePrompts = function()
@@ -91,7 +96,9 @@ CreateStorePrompts = function()
 
 end
 
-
+function GetStorePromptData()
+    return StorePrompts, StorePromptsList
+end
 
 --[[-------------------------------------------------------
  Blips Management
@@ -185,12 +192,5 @@ StartCam = function(x, y, z, rotx, roty, rotz, fov)
 
 	RenderScriptCams(true, true, 500, true, true)
 
-end
-
--- @GetTableLength returns the length of a table.
-GetTableLength = function(T)
-    local count = 0
-    for _ in pairs(T) do count = count + 1 end
-    return count
 end
 
