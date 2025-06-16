@@ -5,23 +5,19 @@ local TPZ = exports.tpz_core:getCoreAPI()
 -----------------------------------------------------------
 
 -- The event is triggered from the store menu for saving an outfit that has been created.
-RegisterServerEvent("tpz_clothing:server:save")
-AddEventHandler("tpz_clothing:server:save", function(outfitName, skinComp)
-
+RegisterServerEvent("tpz_clothing:server:saveOutfit")
+AddEventHandler("tpz_clothing:server:saveOutfit", function(outfitName, skinComp)
 	local _source         = source
-
 	local xPlayer         = TPZ.GetPlayer(_source)
-	local identifier      = xPlayer.getIdentifier()
 	local charidentifier  = xPlayer.getCharacterIdentifier()
 
     local Parameters = { 
-        ['identifier']     = identifier, 
         ['charidentifier'] = charidentifier,
         ['title']          = outfitName,
         ['comps']          = json.encode(skinComp), 
     }
 
-    exports.ghmattimysql:execute("INSERT INTO `outfits` ( `identifier`, `charidentifier`, `title`, `comps`) VALUES ( @identifier, @charidentifier, @title, @comps)", Parameters)
+    exports.ghmattimysql:execute("INSERT INTO `outfits` ( `charidentifier`, `title`, `comps`) VALUES ( @charidentifier, @title, @comps)", Parameters)
 end)
 
 RegisterServerEvent("tpz_clothing:server:replace")
@@ -64,14 +60,14 @@ AddEventHandler("tpz_clothing:server:replace", function(skinComp)
 end)
 
 
-RegisterServerEvent("tpz_clothing:server:rename")
-AddEventHandler("tpz_clothing:server:rename", function(outfitId, inputTitle)
+RegisterServerEvent("tpz_clothing:server:renameOutfit")
+AddEventHandler("tpz_clothing:server:renameOutfit", function(outfitId, inputTitle)
     local Parameters = { ["id"] = outfitId, ['title'] = inputTitle }
     exports.ghmattimysql:execute("UPDATE `outfits` SET `title` = @title WHERE `id` = @id", Parameters)
 end)
 
 -- The event is triggered from the wardrobe menu for removing the selected outfitId from outfits database table.
-RegisterServerEvent("tpz_clothing:server:delete")
-AddEventHandler("tpz_clothing:server:delete", function(outfitId)
+RegisterServerEvent("tpz_clothing:server:deleteOutfit")
+AddEventHandler("tpz_clothing:server:deleteOutfit", function(outfitId)
     exports.ghmattimysql:execute("DELETE FROM `outfits` WHERE id = @id", {["id"] = outfitId})
 end)
