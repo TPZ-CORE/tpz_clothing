@@ -20,8 +20,8 @@ AddEventHandler("tpz_clothing:server:saveOutfit", function(outfitName, skinComp)
     exports.ghmattimysql:execute("INSERT INTO `outfits` ( `charidentifier`, `title`, `comps`) VALUES ( @charidentifier, @title, @comps)", Parameters)
 end)
 
-RegisterServerEvent("tpz_clothing:server:replace")
-AddEventHandler("tpz_clothing:server:replace", function(skinComp)
+RegisterServerEvent("tpz_clothing:server:setDefaultOutfit")
+AddEventHandler("tpz_clothing:server:setDefaultOutfit", function(skinComp)
     local _source         = source
 
 	local xPlayer         = TPZ.GetPlayer(_source)
