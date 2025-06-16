@@ -417,8 +417,7 @@ function OpenSelectedWardrobeOutfitById(outfitId, outfitName, skinComp)
             MenuData.CloseAll()
 
             TaskStandStill(ped, 1)
-
-            ClientData.IsBusy = false
+            PlayerData.IsBusy = false
 
         elseif data.current.value == 'rename' then
 
@@ -434,8 +433,7 @@ function OpenSelectedWardrobeOutfitById(outfitId, outfitName, skinComp)
                 if cb ~= "DECLINE" or cb ~= Locales['DECLINE_BUTTON'] then
                     MenuData.CloseAll()
 
-                    TriggerServerEvent("tpz_clothing:rename", "outfits", outfitId, cb)
-
+                    TriggerServerEvent("tpz_clothing:server:renameOutfit", outfitId, cb)
                     SendNotification(nil, Locales['RENAMED_OUTFIT'], "success")
 
                     Wait(500)
@@ -446,21 +444,17 @@ function OpenSelectedWardrobeOutfitById(outfitId, outfitName, skinComp)
 
         elseif data.current.value == 'default' then
 
-            TriggerServerEvent("tpz_clothing:replace", skinComp)
-
+            TriggerServerEvent("tpz_clothing:server:setDefaultOutfit", skinComp)
             SendNotification(nil, Locales['REPLACED_OUTFIT'], "success")
 
         elseif data.current.value == 'delete' then
 
-            TriggerServerEvent("tpz_clothing:delete", "outfits", outfitId)
-
+            TriggerServerEvent("tpz_clothing:server:deleteOutfit", outfitId)
             SendNotification(nil, Locales['DELETED_OUTFIT'], "success")
 
             MenuData.CloseAll()
-
             TaskStandStill(PlayerPedId(), 1)
-
-            ClientData.IsBusy = false
+            PlayerData.IsBusy = false
         end
 
 
