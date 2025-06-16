@@ -12,19 +12,18 @@
 
 2. Add `ensure tpz_clothing` after the **REQUIREMENTS** in the resources.cfg or server.cfg, depends where your scripts are located.
 
-# Development
+## Development
 
-
-### The following event is opening the personal players wardrobe
-
-```lua
-TriggerEvent("tpz_clothing:openWardrobe") -- Client Side
-
-TriggerClientEvent("tpz_clothing:openWardrobe", source) -- Server Side
-```
-
-### There is also an export that can be used Client Side only.
+### Events 
 
 ```lua
-exports.tpz_clothing:openWardrobe()
+TriggerEvent("tpz_clothing:client:openWardrobeOutfits") -- Client - Client
+TriggerClientEvent("tpz_clothing:client:openWardrobeOutfits", source) -- Server > Client
 ```
+
+### Exports
+
+| Exports                              | Description                                                  |
+|--------------------------------------|--------------------------------------------------------------|
+| exports.tpz_clothing:openWardrobe()  | By executing, it will open the player wardrobe outfits menu. | 
+| exports.tpz_clothing:hasMenuActive() | This returns a boolean (true - false) if menu is active.     |
