@@ -85,12 +85,9 @@ end
 
 local CloseMenuProperly = function()
     MenuData.CloseAll()
-
     DestroyAllCams(true)
 
     TaskStandStill(PlayerPedId(), 1)
-
-    if Config.HideHUD then ExecuteCommand(Config.HideHUD) end
 
     local dict = Config.HandsUpAnimation.Dict
     local body = Config.HandsUpAnimation.Body
@@ -108,8 +105,10 @@ local CloseMenuProperly = function()
     ClothingList       = nil
     ClothingList       = {}
 
-    ClientData.IsBusy = false
-    ClientData.HasStoreOpen = false
+    local PlayerData = GetPlayerData()
+
+    PlayerData.IsBusy = false
+    PlayerData.HasStoreOpen = false
 
 end
 
@@ -120,8 +119,10 @@ end
 function OpenCharacterCustomization()
     MenuData.CloseAll()
     
-    ClientData.IsBusy       = true
-    ClientData.HasStoreOpen = true
+    local PlayerData = GetPlayerData()
+
+    PlayerData.IsBusy       = true
+    PlayerData.HasStoreOpen = true
 
     local _player = PlayerPedId()
     TaskStandStill(_player, -1)
