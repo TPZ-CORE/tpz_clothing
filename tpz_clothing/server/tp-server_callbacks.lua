@@ -28,7 +28,7 @@ TPZ.addNewCallBack("tpz_clothing:callbacks:getPlayerOutfits", function(source, c
 	exports["ghmattimysql"]:execute("SELECT * FROM `outfits`", {}, function(result)
 
 		if TPZ.GetTableLength(result) <= 0 then
-			return cb ({})
+			return cb (nil)
 		end
 
 		for _, res in pairs (result) do
