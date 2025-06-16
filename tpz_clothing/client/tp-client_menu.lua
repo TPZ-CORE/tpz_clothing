@@ -1,4 +1,6 @@
-local MP             = exports.tpz_characters.getMPConfiguration() -- Returns tpz_characters MP Configuration file.
+
+local TPZ             = exports.tpz_core:getCoreAPI()
+local MP              = exports.tpz_characters.getMPConfiguration() -- Returns tpz_characters MP Configuration file.
 local ClothHashNames = exports.tpz_characters.getClothHashNamesList() -- Returns all the cloth hash names list.
 
 local MenuData = {}
@@ -295,65 +297,10 @@ end
 -----------------------------------------------------------
 
 function OpenWardrobe()
-    MenuData.CloseAll()
 
-    local player = PlayerPedId()
+    TriggerEvent("tpz_core:ExecuteServerCallBack", "tpz_clothing:callbacks:getPlayerOutfits", function(outfits)
 
-    TaskStandStill(player, -1)
-
-    ClientData.IsBusy = true
-
-    local elements = {
-     { label = Locales['WARDROBE_MENU']['OUTFITS'].label, value = "outfits",  desc = Locales['WARDROBE_MENU']['OUTFITS'].desc, },
-     { label = Locales['WARDROBE_MENU']['MAKEUP'].label,  value = "makeup",   desc = Locales['WARDROBE_MENU']['MAKEUP'].desc, },
-     { label = Locales['WARDROBE_MENU']['BACK'].label,    value = "exit",     desc = Locales['WARDROBE_MENU']['BACK'].desc, },
-    }
-
-    MenuData.Open('default', GetCurrentResourceName(), 'wardrobe_main',
-
-    {
-        title = Locales['WARDROBE_TITLE'],
-
-        subtext = "",
-        align = "left",
-        elements = elements,
-    },
-
-    function(data, menu)
-
-        if (data.current == "backup") or (data.current.value == 'exit') then
-            MenuData.CloseAll()
-
-            TaskStandStill(player, 1)
-            ClientData.IsBusy = false
-            return
-        end
-
-        if data.current.value == 'outfits' then
-            OpenWardrobeOutfits()
-
-        elseif data.current.value == 'makeup' then
-            OpenMakeupOutfits()
-        end
-
-
-    end,
-    function(data, menu)
-        MenuData.CloseAll()
-
-        TaskStandStill(player, 1)
-        ClientData.IsBusy = false
-    end)
-
-end
-
-function OpenWardrobeOutfits()
-
-    TriggerEvent("tpz_core:ExecuteServerCallBack", "tpz_clothing:getPlayerOutfits", function(outfits)
-
-        local length = GetTableLength(outfits)
-
-        if length <= 0 then
+        if TPZ.GetTableLength(outfits) <= 0 then
             SendNotification(nil, Locales['NO_OUTFITS_AVAILABLE'], "error")
             return
         end
