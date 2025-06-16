@@ -314,7 +314,7 @@ function OpenWardrobe()
             table.insert(elements, { name = outfit.title, skincomp = outfit.comps, label =  _ .. ". " .. outfit.title, value = outfit.id})
         end
 
-        table.insert(elements, { label = Locales['WARDROBE_MENU']['BACK'].label, value = "back",  desc = Locales['WARDROBE_MENU']['BACK'].desc, })
+        table.insert(elements, { label = Locales['WARDROBE_MENU']['EXIT'].label, value = "exit",  desc = Locales['WARDROBE_MENU']['EXIT'].desc, })
 
         MenuData.Open('default', GetCurrentResourceName(), 'wardrobe_outfits',
 
@@ -328,8 +328,8 @@ function OpenWardrobe()
 
         function(data, menu)
 
-            if (data.current == "backup") or (data.current.value == 'back') then
-                OpenWardrobe()
+            if (data.current == "backup") or (data.current.value == 'exit') then
+                CloseMenuProperly()
                 return
             end
 
@@ -337,7 +337,7 @@ function OpenWardrobe()
 
         end,
         function(data, menu)
-            OpenWardrobe()
+            CloseMenuProperly()
         end)
 
     end, { type = "outfits" })
