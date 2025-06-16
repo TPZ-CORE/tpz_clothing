@@ -28,6 +28,8 @@ Config.HandsUpAnimation = {
     Body = "handsup_register_owner",
 }
 
+Config.OpenWardrobeOutfitsEvent = "tpz_clothing:client:openWardrobeOutfits"
+
 -----------------------------------------------------------
 --[[ Clothing Store Locations ]]--
 -----------------------------------------------------------
