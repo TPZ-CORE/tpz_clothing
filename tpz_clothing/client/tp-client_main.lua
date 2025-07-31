@@ -42,87 +42,59 @@ end)
 
 Citizen.CreateThread(function()
 
-    RegisterWardrobePrompts()
+	RegisterWardrobePrompts()
 
-    while true do
-        Citizen.Wait(0)
+	while true do
 
-        local sleep        = true
+		Citizen.Wait(0)
 
-        local player       = PlayerPedId()
-        local isPlayerDead = IsEntityDead(player)
+		local sleep        = true
+		local player       = PlayerPedId()
+		local isPlayerDead = IsEntityDead(player)
 
-        if not isPlayerDead and not PlayerData.IsBusy then
-            local coords = GetEntityCoords(player)
+		if not isPlayerDead and not PlayerData.IsBusy then
+			local coords = GetEntityCoords(player)
 
-            for locId, locationConfig in pairs(Config.Stores) do
+			for locId, locationConfig in pairs(Config.Stores) do
 
-                local coordsDist = vector3(coords.x, coords.y, coords.z)
-                local coordsLoc  = vector3(locationConfig.Coords.x, locationConfig.Coords.y, locationConfig.Coords.z)
-                local distance   = #(coordsDist - coordsLoc)
+				local coordsLoc  = vector3(locationConfig.Coords.x, locationConfig.Coords.y, locationConfig.Coords.z)
+				local distance   = #(coords - coordsLoc)
 
-                if locationConfig.ActionMarkers.Enabled and distance <= locationConfig.ActionMarkers.Distance then
-                    sleep = false
+				if locationConfig.ActionMarkers.Enabled and distance <= locationConfig.ActionMarkers.Distance then
+					sleep = false
 
-                    local RGBA = locationConfig.ActionMarkers.RGBA
-                    Citizen.InvokeNative(0x2A32FAA57B937173, 0x94FDAE17, locationConfig.Coords.x, locationConfig.Coords.y, locationConfig.Coords.z - 1.2, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.0, 0.7, RGBA.r, RGBA.g, RGBA.b, RGBA.a, false, true, 2, false, false, false, false)
-                end
+					local RGBA = locationConfig.ActionMarkers.RGBA
+					Citizen.InvokeNative(0x2A32FAA57B937173, 0x94FDAE17, locationConfig.Coords.x, locationConfig.Coords.y, locationConfig.Coords.z - 1.2, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.0, 0.7, RGBA.r, RGBA.g, RGBA.b, RGBA.a, false, true, 2, false, false, false, false)
+				end
     
-                if distance <= locationConfig.ActionDistance then
-                    sleep = false
+				if distance <= locationConfig.ActionDistance then
+					sleep = false
+					local label = CreateVarString(10, 'LITERAL_STRING', Locales[locationConfig.ActionType .. '_TITLE'])
+					PromptSetActiveGroupThisFrame(Prompts, label)
 
-                    local label = CreateVarString(10, 'LITERAL_STRING', Locales[locationConfig.ActionType .. '_TITLE'])
-                    PromptSetActiveGroupThisFrame(Prompts, label)
+					if PromptHasHoldModeCompleted(PromptList) then
 
-                    for i, prompt in pairs (PromptsList) do
+						SetEntityHeading(player, locationConfig.Coords.h)
+						CurrentHeading = locationConfig.Coords.h
 
-                        PromptSetVisible(prompt.prompt, 0)
-                        PromptSetEnabled(prompt.prompt, 0)
+						local cameraCoords = locationConfig.CameraCoords
+      StartCam(cameraCoords.x, cameraCoords.y, cameraCoords.z, cameraCoords.rotx, cameraCoords.roty, cameraCoords.rotz, cameraCoords.zoom)
+						CameraHandler.coords = { x = cameraCoords.x, y = cameraCoords.y, z = cameraCoords.z, rotx = cameraCoords.rotx, roty = cameraCoords.roty, rotz = cameraCoords.rotz, fov = cameraCoords.fov }
+						CameraHandler.z    = cameraCoords.z
+						CameraHandler.zoom = cameraCoords.zoom 
 
-                        if prompt.type == 'OPEN_STORE' then
-                            PromptSetVisible(prompt.prompt, 1)
-                            PromptSetEnabled(prompt.prompt, 1)
-                        end
+						OpenCharacterCustomization()
+     end
 
-                        if PromptHasHoldModeCompleted(prompt.prompt) then
+     Wait(1000)
+			end
+		end
 
-                            if prompt.type == "OPEN_STORE" then
+		if sleep then
+			Wait(1000)
+		end
 
-                                SetEntityHeading(player, locationConfig.Coords.h)
-
-                                CurrentHeading = locationConfig.Coords.h
-
-                                local cameraCoords = locationConfig.CameraCoords
-                                StartCam(cameraCoords.x, cameraCoords.y, cameraCoords.z, cameraCoords.rotx, cameraCoords.roty,
-                                cameraCoords.rotz, cameraCoords.zoom)
-
-                                CameraHandler.coords = {
-                                    x = cameraCoords.x, y = cameraCoords.y, z = cameraCoords.z, rotx = cameraCoords.rotx, roty = cameraCoords.roty,
-                                    rotz = cameraCoords.rotz, fov = cameraCoords.fov
-                                }
-                            
-                                CameraHandler.z    = cameraCoords.z
-                                CameraHandler.zoom = cameraCoords.zoom 
-             
-                                OpenCharacterCustomization()
-                            end
-
-                            Wait(1000)
-                        end
-
-                    end
-                end
-
-            end
-
-        end
-
-        if sleep then
-            Citizen.Wait(1000)
-        end
-
-    end
-    
+	end
 end)
 
 Citizen.CreateThread(function()
