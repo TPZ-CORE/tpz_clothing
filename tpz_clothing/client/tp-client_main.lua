@@ -1,6 +1,8 @@
 local PlayerData = { 
 	IsBusy       = false, 
 	HasStoreOpen = false, 
+
+	Clothing     = {},
 	Loaded       = false
 }
 
