@@ -30,13 +30,8 @@ end
 --[[ Exports ]]--
 -----------------------------------------------------------
 
-exports('openWardrobe', function()
-	OpenWardrobe()
-end)
-
-exports('hasMenuActive', function()
-	return PlayerData.IsBusy or PlayerData.HasStoreOpen
-end)
+exports('openWardrobe', function() OpenWardrobe() end)
+exports('isBusy', function() return PlayerData.IsBusy or PlayerData.HasStoreOpen end)
 
 -----------------------------------------------------------
 --[[ Events ]]--
@@ -48,6 +43,7 @@ AddEventHandler("tpz_clothing:client:update", function(cb)
 
 	if actionType == "REQUEST" then
 		PlayerData.Clothing = data
+		PlayerData.Loaded = true
 	end
 
 end)
