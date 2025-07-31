@@ -78,7 +78,7 @@ Citizen.CreateThread(function()
 						CurrentHeading = locationConfig.Coords.h
 
 						local cameraCoords = locationConfig.CameraCoords
-      StartCam(cameraCoords.x, cameraCoords.y, cameraCoords.z, cameraCoords.rotx, cameraCoords.roty, cameraCoords.rotz, cameraCoords.zoom)
+						StartCam(cameraCoords.x, cameraCoords.y, cameraCoords.z, cameraCoords.rotx, cameraCoords.roty, cameraCoords.rotz, cameraCoords.zoom)
 						CameraHandler.coords = { x = cameraCoords.x, y = cameraCoords.y, z = cameraCoords.z, rotx = cameraCoords.rotx, roty = cameraCoords.roty, rotz = cameraCoords.rotz, fov = cameraCoords.fov }
 						CameraHandler.z    = cameraCoords.z
 						CameraHandler.zoom = cameraCoords.zoom 
@@ -86,8 +86,9 @@ Citizen.CreateThread(function()
 						OpenCharacterCustomization()
      end
 
-     Wait(1000)
+					Wait(1000)
 			end
+
 		end
 
 		if sleep then
