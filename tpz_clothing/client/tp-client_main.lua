@@ -8,15 +8,6 @@ local CameraHandler  = {coords = nil, zoom = 0, z = 0 }
 local CurrentHeading = 0
 
 -----------------------------------------------------------
---[[ Local Functions ]]--
------------------------------------------------------------
-
-local function AdjustEntityPedHeading(amount)
-	CurrentHeading = CurrentHeading + amount
-	SetPedDesiredHeading(PlayerPedId(), CurrentHeading)
-end
-
------------------------------------------------------------
 --[[ Functions ]]--
 -----------------------------------------------------------
 
