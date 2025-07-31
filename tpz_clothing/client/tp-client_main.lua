@@ -84,7 +84,7 @@ Citizen.CreateThread(function()
 						CameraHandler.zoom = cameraCoords.zoom 
 
 						OpenCharacterCustomization()
-     end
+					end
 
 					Wait(1000)
 			end
