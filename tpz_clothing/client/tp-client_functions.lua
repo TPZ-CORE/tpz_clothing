@@ -194,3 +194,8 @@ StartCam = function(x, y, z, rotx, roty, rotz, fov)
 
 end
 
+AdjustEntityPedHeading = function(amount)
+	CurrentHeading = CurrentHeading + amount
+	SetPedDesiredHeading(PlayerPedId(), CurrentHeading)
+end
+
