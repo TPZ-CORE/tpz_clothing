@@ -12,7 +12,7 @@ Config.Keys = {
 
 -- (!) You can't have the same key in multiple prompts but must be used only once.
 Config.Prompts = {
-    ['OPEN_STORE']    = {label = 'Press',  key = 'SPACEBAR' },
+    ['OPEN_STORE']    = {label = 'Press',  key = 'G' },
     ['OPEN_WARDROBE'] = {label = 'Press',  key = 'G' },
 }
 
