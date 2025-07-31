@@ -1,7 +1,8 @@
 local PlayerData = { 
-	IsBusy   = false, 
-	Clothing = {},
-	Loaded   = false
+	IsBusy       = false, 
+	InStoreMenu  = false,
+	Clothing     = {},
+	Loaded       = false
 }
 
 local CameraHandler  = {coords = nil, zoom = 0, z = 0 }
