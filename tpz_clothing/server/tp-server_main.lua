@@ -40,7 +40,7 @@ AddEventHandler("tpz_clothing:server:request", function()
           Clothing[_source].purchased = json.decode(result[1].purchased)
         end
 
-        TriggerClientEvent("tpz_clothing:client:update", _source, Clothing[_source])
+        TriggerClientEvent("tpz_clothing:client:update", _source, { actionType = "REQUEST", data = Clothing[_source] })
 		
     end)
 
