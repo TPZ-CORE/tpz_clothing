@@ -1,8 +1,15 @@
 local TPZ = exports.tpz_core:getCoreAPI()
-
-local ClothesList = {} -- Required for saving and loading purchased clothes. 
+local Clothing = {} -- Required for saving and loading purchased clothes and wardrobe outfits. 
 
 -----------------------------------------------------------
+--[[ Functions ]]--
+-------------------------------------------------------------
+
+function GetClothingData()
+  return Clothing
+end
+
+-------------------------------------------------------------
 --[[ Base Events  ]]--
 -----------------------------------------------------------
 
@@ -11,7 +18,7 @@ AddEventHandler('onResourceStop', function(resourceName)
     return
   end
 
-  ClothesList = nil
+  Clothing = nil
 end)
 
 -----------------------------------------------------------
@@ -21,26 +28,19 @@ end)
 RegisterServerEvent("tpz_clothing:server:request")
 AddEventHandler("tpz_clothing:server:request", function()
     local _source        = source
-
     local xPlayer        = TPZ.GetPlayer(_source)
     local charIdentifier = xPlayer.getCharacterIdentifier()
 
-    exports["ghmattimysql"]:execute("SELECT `boughtOutfitComps` FROM `characters` WHERE `charidentifier` = @charidentifier", { ['charidentifier'] = charIdentifier }, function(result)
+    exports["ghmattimysql"]:execute("SELECT * FROM `outfits` WHERE `charidentifier` = @charidentifier", { ['charidentifier'] = charIdentifier }, function(result)
 		
-        if not result or result and not result[1].boughtOutfitComps then
-            print("^1[WARNING] - boughtOutfitComps column does not exist on characters table")
-            return
+        Clothing[_source] = { outfits = {}, purchased = {} }
+
+        if result and result[1] then
+          Clothing[_source].outfits   = json.decode(result[1].outfits)
+          Clothing[_source].purchased = json.decode(result[1].purchased)
         end
 
-        ClothesList[charIdentifier] = {}
-
-        local boughtComps = json.decode(result[1].boughtOutfitComps)
-
-        if boughtComps and TPZ.GetTableLength(boughtComps) > 0 then
-            ClothesList[charIdentifier] = boughtComps
-        end
-
-        TriggerClientEvent("tpz_clothing:client:update", _source, ClothesList[charIdentifier])
+        TriggerClientEvent("tpz_clothing:client:update", _source, Clothing[_source])
 		
     end)
 
