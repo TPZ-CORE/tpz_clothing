@@ -28,4 +28,8 @@ TriggerClientEvent("tpz_clothing:client:openWardrobeOutfits", source) -- Server 
 | Exports                              | Description                                                  |
 |--------------------------------------|--------------------------------------------------------------|
 | exports.tpz_clothing:openWardrobe()  | By executing, it will open the player wardrobe outfits menu. | 
-| exports.tpz_clothing:hasMenuActive() | This returns a boolean (true - false) if menu is active.     |
+| exports.tpz_clothing:isBusy() | This returns a boolean (true - false) if any menu is active.     |
+
+### Information
+
+If you encounter an "issue" such as not saved outfits or purchased cloth types, the reason is because the server was manually restarted or the script was stopped. The system is saving the player outfits and purchased cloth types when player is dropped (disconnected).
