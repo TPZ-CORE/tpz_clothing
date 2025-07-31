@@ -21,20 +21,44 @@ AddEventHandler('onResourceStop', function(resourceName)
   Clothing = nil
 end)
 
+AddEventHandler('playerDropped', function (reason, resourceName, clientDropReason)
+    local _source = source
+
+    if not Clothing[_source] then
+      return
+    end
+
+    local ClothingData = Clothing[_source]
+
+    local Parameters = {
+      ['charidentifier'] = ClothingData.charidentifier,
+      ['outfits']        = json.encode(ClothingData.outfits),
+      ['purchased']      = json.encode(ClothingData.purchased)
+    }
+    exports.ghmattimysql:execute("UPDATE `clothing` SET `outfits` = @outfits, `purchased` = @purchased WHERE `charidentifier` = @charidentifier", Parameters)
+    Clothing[_source] = nil
+end)
+
+
 -----------------------------------------------------------
 --[[ Events  ]]--
 -----------------------------------------------------------
 
 RegisterServerEvent("tpz_clothing:server:request")
 AddEventHandler("tpz_clothing:server:request", function()
-    local _source        = source
-    local xPlayer        = TPZ.GetPlayer(_source)
+    local _source = source
+    local xPlayer = TPZ.GetPlayer(_source)
+
+    if not xPlayer.loaded() then
+      return
+    end
+
     local identifier      = xPlayer.getIdentifier()
     local charIdentifier  = xPlayer.getCharacterIdentifier()
 
     exports["ghmattimysql"]:execute("SELECT * FROM `outfits` WHERE `charidentifier` = @charidentifier", { ['charidentifier'] = charIdentifier }, function(result)
 		
-        Clothing[_source] = { outfits = {}, purchased = {} }
+        Clothing[_source] = { identifier = identifier, charidentifier = charIdentifier, outfits = {}, purchased = {} }
 
         if result and result[1] then
           Clothing[_source].outfits   = json.decode(result[1].outfits)
