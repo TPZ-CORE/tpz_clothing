@@ -40,6 +40,16 @@ end)
 --[[ Events ]]--
 -----------------------------------------------------------
  
+RegisterNetEvent("tpz_clothing:client:update")
+AddEventHandler("tpz_clothing:client:update", function(cb)
+	local actionType, data = cb.actionType, cb.data
+
+	if actionType == "REQUEST" then
+		PlayerData.Clothing = data
+	end
+
+end)
+
 RegisterNetEvent(Config.OpenWardrobeOutfitsEvent)
 AddEventHandler(Config.OpenWardrobeOutfitsEvent, function()
     OpenWardrobe()
