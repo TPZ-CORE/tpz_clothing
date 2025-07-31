@@ -29,7 +29,8 @@ RegisterServerEvent("tpz_clothing:server:request")
 AddEventHandler("tpz_clothing:server:request", function()
     local _source        = source
     local xPlayer        = TPZ.GetPlayer(_source)
-    local charIdentifier = xPlayer.getCharacterIdentifier()
+    local identifier      = xPlayer.getIdentifier()
+    local charIdentifier  = xPlayer.getCharacterIdentifier()
 
     exports["ghmattimysql"]:execute("SELECT * FROM `outfits` WHERE `charidentifier` = @charidentifier", { ['charidentifier'] = charIdentifier }, function(result)
 		
@@ -38,6 +39,10 @@ AddEventHandler("tpz_clothing:server:request", function()
         if result and result[1] then
           Clothing[_source].outfits   = json.decode(result[1].outfits)
           Clothing[_source].purchased = json.decode(result[1].purchased)
+        else
+
+          local Parameters = { ["identifier"] = identifier, ["charidentifier"] = charIdentifier }
+          exports.ghmattimysql:execute("INSERT INTO `outfits` (`identifier`, `charidentifier` ) VALUES (@identifier, @charidentifier)", Parameters)
         end
 
         TriggerClientEvent("tpz_clothing:client:update", _source, { actionType = "REQUEST", data = Clothing[_source] })
