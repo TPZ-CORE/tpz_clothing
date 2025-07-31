@@ -1,6 +1,6 @@
 
-local Prompts, StorePrompts = GetRandomIntInRange(0, 0xffffff), GetRandomIntInRange(0, 0xffffff)
-local PromptsList, StorePromptsList = {}, {}
+local WardrobePrompts, StoreLocationPrompts, StorePrompts = GetRandomIntInRange(0, 0xffffff), GetRandomIntInRange(0, 0xffffff), GetRandomIntInRange(0, 0xffffff)
+local WardrobePromptsList, StoreLocationPromptsList, StorePromptsList = {}, {}, {}
 
 --[[-------------------------------------------------------
  Handlers
@@ -11,9 +11,13 @@ AddEventHandler("onResourceStop", function(resourceName)
         return
     end
 
+    Citizen.InvokeNative(0x00EDE88D4D13CF59, WardrobePrompts) -- UiPromptDelete
+    Citizen.InvokeNative(0x00EDE88D4D13CF59, StoreLocationPrompts) -- UiPromptDelete
+    Citizen.InvokeNative(0x00EDE88D4D13CF59, StorePrompts) -- UiPromptDelete
+
     local PlayerData = GetPlayerData()
 
-    if PlayerData.IsBusy or PlayerData.HasStoreOpen then
+    if PlayerData.IsBusy then
         DestroyAllCams(true)
     end
 
@@ -29,41 +33,60 @@ AddEventHandler("onResourceStop", function(resourceName)
         end
     end
 
-    Citizen.InvokeNative(0x00EDE88D4D13CF59, Prompts) -- UiPromptDelete
-    Citizen.InvokeNative(0x00EDE88D4D13CF59, StorePrompts) -- UiPromptDelete
-
 end)
 
 --[[-------------------------------------------------------
  Prompts
 ]]---------------------------------------------------------
 
-RegisterPrompts = function()
+RegisterWardrobePrompts = function()
 
-    for index, tprompt in pairs (Config.Prompts) do
-
-        local str = tprompt.label
-        local keyPress = Config.Keys[tprompt.key]
+    local str = Config.Prompts["OPEN_WARDROBE"].label
+    local keyPress = Config.Keys[Config.Prompts["OPEN_WARDROBE"].key]
     
-        local _prompt = PromptRegisterBegin()
-        PromptSetControlAction(_prompt, keyPress)
-        str = CreateVarString(10, 'LITERAL_STRING', str)
-        PromptSetText(_prompt, str)
-        PromptSetEnabled(_prompt, 0)
-        PromptSetVisible(_prompt, 1)
-        PromptSetStandardMode(_prompt, 1)
-        PromptSetHoldMode(_prompt, 500)
-        PromptSetGroup(_prompt, Prompts)
-        Citizen.InvokeNative(0xC5F428EE08FA7F2C, _prompt, true)
-        PromptRegisterEnd(_prompt)
+    local _prompt = PromptRegisterBegin()
+    PromptSetControlAction(_prompt, keyPress)
+    str = CreateVarString(10, 'LITERAL_STRING', str)
+    PromptSetText(_prompt, str)
+    PromptSetEnabled(_prompt, 0)
+    PromptSetVisible(_prompt, 1)
+    PromptSetStandardMode(_prompt, 1)
+    PromptSetHoldMode(_prompt, 500)
+    PromptSetGroup(_prompt, WardrobePrompts)
+    Citizen.InvokeNative(0xC5F428EE08FA7F2C, _prompt, true)
+    PromptRegisterEnd(_prompt)
     
-        table.insert(PromptsList, {prompt = _prompt, type = index })
-    end
+    WardrobePromptsList = _prompt
 
 end
 
-function GetPromptData()
-    return Prompts, PromptsList
+function GetWardrobePromptData()
+    return WardrobePrompts, WardrobePromptsList
+end
+
+RegisterStoreLocationPrompts = function()
+
+    local str = Config.Prompts["OPEN_STORE"].label
+    local keyPress = Config.Keys[Config.Prompts["OPEN_STORE"].key]
+    
+    local _prompt = PromptRegisterBegin()
+    PromptSetControlAction(_prompt, keyPress)
+    str = CreateVarString(10, 'LITERAL_STRING', str)
+    PromptSetText(_prompt, str)
+    PromptSetEnabled(_prompt, 0)
+    PromptSetVisible(_prompt, 1)
+    PromptSetStandardMode(_prompt, 1)
+    PromptSetHoldMode(_prompt, 500)
+    PromptSetGroup(_prompt, StoreLocationPrompts)
+    Citizen.InvokeNative(0xC5F428EE08FA7F2C, _prompt, true)
+    PromptRegisterEnd(_prompt)
+    
+    StoreLocationPromptsList = _prompt
+
+end
+
+function GetStoreLocationPromptData()
+    return StoreLocationPrompts, StoreLocationPromptsList
 end
 
 CreateStorePrompts = function()
