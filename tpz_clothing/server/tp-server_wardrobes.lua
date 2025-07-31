@@ -1,62 +1,57 @@
 local TPZ = exports.tpz_core:getCoreAPI()
 
 -----------------------------------------------------------
+--[[ Local Functions ]]--
+-----------------------------------------------------------
+
+local function GetOutfitDataByOsTime(source, time)
+    local Clothing = GetClothing()
+
+    for _, outfit in pairs (Clothing[source].outfits) do
+
+        if tostring(outfit.date) == tostring(time) then
+            return json.encode(outfit.comps)
+        end
+
+    end
+
+    return nil
+
+end
+
+-------------------------------------------------------------
 --[[ General Events ]]--
 -----------------------------------------------------------
 
 -- The event is triggered from the store menu for saving an outfit that has been created.
 RegisterServerEvent("tpz_clothing:server:saveOutfit")
 AddEventHandler("tpz_clothing:server:saveOutfit", function(outfitName, skinComp)
-	local _source         = source
-	local xPlayer         = TPZ.GetPlayer(_source)
-	local charidentifier  = xPlayer.getCharacterIdentifier()
+	local _source    = source
+    local Clothing   = GetClothing()
 
-    local Parameters = { 
-        ['charidentifier'] = charidentifier,
-        ['title']          = outfitName,
-        ['comps']          = json.encode(skinComp), 
-    }
+    -- by using os.time() the outfit becomes unique (its the id of the outfit).
+    local insert_data = { name = outfitName, date = os.time(), comps = json.encode(skinComp) }
 
-    exports.ghmattimysql:execute("INSERT INTO `outfits` ( `charidentifier`, `title`, `comps`) VALUES ( @charidentifier, @title, @comps)", Parameters)
+    table.insert(Clothing[_source], insert_data )
+    TriggerClientEvent("tpz_clothing:client:update", _source, { actionType = "INSERT_OUTFIT", data = insert_data })
 end)
 
 RegisterServerEvent("tpz_clothing:server:setDefaultOutfit")
-AddEventHandler("tpz_clothing:server:setDefaultOutfit", function(skinComp)
-    local _source         = source
+AddEventHandler("tpz_clothing:server:setDefaultOutfit", function(osTime)
+    local _source  = source
+    local xPlayer   = TPZ.GetPlayer(_source)
+    local Clothing  = GetClothing()
+	
+    local skinComp  = GetOutfitDataByOsTime(_source, osTime)
 
-	local xPlayer         = TPZ.GetPlayer(_source)
-    local charidentifier  = xPlayer.getCharacterIdentifier()
+    local Parameters = {
+        ["charidentifier"] = charidentifier,
+        ['skinComp']       = skinComp,
+    }
 
-    local newSkinComp     = json.decode(skinComp)
+    exports.ghmattimysql:execute("UPDATE `characters` SET `skinComp` = @skinComp WHERE `charidentifier` = @charidentifier", Parameters)
 
-    exports["ghmattimysql"]:execute("SELECT * FROM `characters` WHERE `charidentifier` = @charidentifier", { ['charidentifier'] = charidentifier }, function(result)
-		
-		local currentSkinComp = json.decode(result[1].skinComp)
-        local finished        = false
-
-        for _, comp in pairs (newSkinComp) do
-
-            if currentSkinComp[_] then currentSkinComp[_] = comp end
-
-            if next(newSkinComp, _) == nil then
-                finished = true
-            end
-
-        end
-
-        while not finished do
-            Wait(100)
-        end
-
-        local Parameters = {
-            ["charidentifier"] = charidentifier,
-            ['skinComp']       = json.encode(currentSkinComp),
-        }
-    
-       exports.ghmattimysql:execute("UPDATE `characters` SET `skinComp` = @skinComp WHERE `charidentifier` = @charidentifier", Parameters)
-
-    end)
-    
+    xPlayer.setOutfitComponents(json.encode(skinComp))
 end)
 
 
