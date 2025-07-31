@@ -1,9 +1,7 @@
 local PlayerData = { 
-	IsBusy       = false, 
-	HasStoreOpen = false, 
-
-	Clothing     = {},
-	Loaded       = false
+	IsBusy   = false, 
+	Clothing = {},
+	Loaded   = false
 }
 
 local CameraHandler  = {coords = nil, zoom = 0, z = 0 }
@@ -27,14 +25,7 @@ function GetPlayerData()
 end
 
 -----------------------------------------------------------
---[[ Exports ]]--
------------------------------------------------------------
-
-exports('openWardrobe', function() OpenWardrobe() end)
-exports('isBusy', function() return PlayerData.IsBusy or PlayerData.HasStoreOpen end)
-
------------------------------------------------------------
---[[ Events ]]--
+--[[ General Events ]]--
 -----------------------------------------------------------
  
 RegisterNetEvent("tpz_clothing:client:update")
