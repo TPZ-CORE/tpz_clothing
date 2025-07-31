@@ -42,7 +42,7 @@ end)
 
 Citizen.CreateThread(function()
 
-    RegisterPrompts()
+    RegisterWardrobePrompts()
 
     while true do
         Citizen.Wait(0)
@@ -127,7 +127,7 @@ end)
 
 Citizen.CreateThread(function()
 
-    RegisterPrompts()
+    RegisterStoreLocationPrompts()
 
     while true do
         Citizen.Wait(0)
