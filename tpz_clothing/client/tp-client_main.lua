@@ -46,7 +46,7 @@ Citizen.CreateThread(function()
 
 	while true do
 
-		Citizen.Wait(0)
+		Wait(0)
 
 		local sleep        = true
 		local player       = PlayerPedId()
