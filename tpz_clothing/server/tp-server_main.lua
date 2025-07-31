@@ -35,7 +35,7 @@ AddEventHandler('playerDropped', function (reason, resourceName, clientDropReaso
       ['outfits']        = json.encode(ClothingData.outfits),
       ['purchased']      = json.encode(ClothingData.purchased)
     }
-    exports.ghmattimysql:execute("UPDATE `clothing` SET `outfits` = @outfits, `purchased` = @purchased WHERE `charidentifier` = @charidentifier", Parameters)
+    exports.ghmattimysql:execute("UPDATE `outfits` SET `outfits` = @outfits, `purchased` = @purchased WHERE `charidentifier` = @charidentifier", Parameters)
     Clothing[_source] = nil
 end)
 
