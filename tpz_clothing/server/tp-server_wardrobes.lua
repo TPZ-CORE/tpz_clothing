@@ -84,6 +84,17 @@ end)
 
 -- The event is triggered from the wardrobe menu for removing the selected outfitId from outfits database table.
 RegisterServerEvent("tpz_clothing:server:deleteOutfit")
-AddEventHandler("tpz_clothing:server:deleteOutfit", function(outfitId)
+AddEventHandler("tpz_clothing:server:deleteOutfit", function(osTime)
+    local _source   = source
+    local Clothing  = GetClothing()
+
+    for _, outfit in pairs (Clothing[source].outfits) do
+
+        if tostring(outfit.date) == tostring(osTime) then
+            table.remove(Clothing[source].outfits, _)
+        end
+
+    end
+
     exports.ghmattimysql:execute("DELETE FROM `outfits` WHERE id = @id", {["id"] = outfitId})
 end)
