@@ -21,9 +21,10 @@ Locales = {
     ['DECLINE_BUTTON']          = "DECLINE",
 
     ['SAVED_OUTFIT']            = "~t6~You have successfully saved an outfit.",
-    ['REPLACED_OUTFIT']         = "~t6~You have successfully replaced your default outfit.",
-    ['RENAMED_OUTFIT']          = "~t6~You have successfully renamed an outfit",
-    ['DELETED_OUTFIT']          = "~t6~You have successfully removed an outfit",
+    ['REPLACED_OUTFIT']         = "~t6~You have replaced your default outfit.",
+    ['RENAMED_OUTFIT']          = "~t6~You have renamed an outfit",
+    ['DELETED_OUTFIT']          = "~t6~You have removed an outfit",
+    ['SHARED_OUTFIT']           = "~t6~You have shared an outfit",
 
     ['WARDROBE_TITLE']          = "Wardrobe",
 
