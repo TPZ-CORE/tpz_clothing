@@ -96,7 +96,7 @@ Config.Wardrobes = {
 
         BlipData = {
             Enabled = true,
-            Title   = "Wardrobe",
+            Title   = "Public Wardrobe",
             Sprite  = 1496995379,
         },
 
@@ -116,7 +116,7 @@ Config.Wardrobes = {
 
         BlipData = {
             Enabled = true,
-            Title   = "Wardrobe",
+            Title   = "Public Wardrobe",
             Sprite  = 1496995379,
         },
 
@@ -136,7 +136,7 @@ Config.Wardrobes = {
 
         BlipData = {
             Enabled = true,
-            Title   = "Wardrobe",
+            Title   = "Public Wardrobe",
             Sprite  = 1496995379,
         },
 
@@ -156,7 +156,7 @@ Config.Wardrobes = {
 
         BlipData = {
             Enabled = true,
-            Title   = "Wardrobe",
+            Title   = "Public Wardrobe",
             Sprite  = 1496995379,
         },
 
@@ -176,7 +176,7 @@ Config.Wardrobes = {
 
         BlipData = {
             Enabled = true,
-            Title   = "Wardrobe",
+            Title   = "Public Wardrobe",
             Sprite  = 1496995379,
         },
 
