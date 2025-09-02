@@ -38,8 +38,8 @@ AddEventHandler("tpz_clothing:server:shareOutfit", function(targerSource, osTime
 
     outfit.date = os.time()
 
-    table.insert(Clothing[target], insert_data )
-    TriggerClientEvent("tpz_clothing:client:update", target, { actionType = "INSERT_OUTFIT", data = insert_data })
+    table.insert(Clothing[target], outfit )
+    TriggerClientEvent("tpz_clothing:client:update", target, { actionType = "INSERT_OUTFIT", data = outfit })
     
     -- notify
 end)
