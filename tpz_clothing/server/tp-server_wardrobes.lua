@@ -10,7 +10,7 @@ local function GetOutfitDataByOsTime(source, time)
     for _, outfit in pairs (Clothing[source].outfits) do
 
         if tostring(outfit.date) == tostring(time) then
-            return json.encode(outfit.comps)
+            return outfit
         end
 
     end
@@ -22,6 +22,27 @@ end
 -------------------------------------------------------------
 --[[ General Events ]]--
 -----------------------------------------------------------
+
+RegisterServerEvent("tpz_clothing:server:shareOutfit")
+AddEventHandler("tpz_clothing:server:shareOutfit", function(targerSource, osTime)
+    local _source   = source
+    local target    = tonumber(targerSource)
+    local Clothing  = GetClothing()
+	
+    local outfit  = GetOutfitDataByOsTime(_source, osTime)
+
+    if GetPlayerName(target) == nil then
+        -- player not online notify
+        return
+    end
+
+    outfit.date = os.time()
+
+    table.insert(Clothing[target], insert_data )
+    TriggerClientEvent("tpz_clothing:client:update", target, { actionType = "INSERT_OUTFIT", data = insert_data })
+    
+    -- notify
+end)
 
 -- The event is triggered from the store menu for saving an outfit that has been created.
 RegisterServerEvent("tpz_clothing:server:saveOutfit")
@@ -42,11 +63,11 @@ AddEventHandler("tpz_clothing:server:setDefaultOutfit", function(osTime)
     local xPlayer   = TPZ.GetPlayer(_source)
     local Clothing  = GetClothing()
 	
-    local skinComp  = GetOutfitDataByOsTime(_source, osTime)
+    local outfit  = GetOutfitDataByOsTime(_source, osTime)
 
     local Parameters = {
         ["charidentifier"] = charidentifier,
-        ['skinComp']       = skinComp,
+        ['skinComp']       = json.encode(outfit.comps),
     }
 
     exports.ghmattimysql:execute("UPDATE `characters` SET `skinComp` = @skinComp WHERE `charidentifier` = @charidentifier", Parameters)
