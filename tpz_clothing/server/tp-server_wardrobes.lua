@@ -77,9 +77,20 @@ end)
 
 
 RegisterServerEvent("tpz_clothing:server:renameOutfit")
-AddEventHandler("tpz_clothing:server:renameOutfit", function(outfitId, inputTitle)
-    local Parameters = { ["id"] = outfitId, ['title'] = inputTitle }
-    exports.ghmattimysql:execute("UPDATE `outfits` SET `title` = @title WHERE `id` = @id", Parameters)
+AddEventHandler("tpz_clothing:server:renameOutfit", function(osTime, inputTitle)
+    local _source  = source
+    local Clothing  = GetClothing()
+
+    for _, outfit in pairs (Clothing[_source].outfits) do
+
+        if tostring(outfit.date) == tostring(osTime) then
+            outfit.name = inputTitle
+        end
+
+    end
+
+    -- notify
+
 end)
 
 -- The event is triggered from the wardrobe menu for removing the selected outfitId from outfits database table.
@@ -88,13 +99,13 @@ AddEventHandler("tpz_clothing:server:deleteOutfit", function(osTime)
     local _source   = source
     local Clothing  = GetClothing()
 
-    for _, outfit in pairs (Clothing[source].outfits) do
+    for _, outfit in pairs (Clothing[_source].outfits) do
 
         if tostring(outfit.date) == tostring(osTime) then
-            table.remove(Clothing[source].outfits, _)
+            table.remove(Clothing[_source].outfits, _)
         end
 
     end
-
-    exports.ghmattimysql:execute("DELETE FROM `outfits` WHERE id = @id", {["id"] = outfitId})
+    
+    -- notify
 end)
