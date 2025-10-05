@@ -87,6 +87,10 @@ $(function() {
 
     } else if (item.action == 'setOutfitComponentInformation') {
 
+      if (item.texture_id != null ){
+        $("#currentNumber").text(item.texture_id + ' / ' + item.max_textures);
+      }
+      
       $("#palette-currentNumber").text(item.current + ' / ' + item.max);
 
       SELECTED_ITEM_PALETTE_ID = item.current;
@@ -353,22 +357,7 @@ $(function() {
   $("#main").on("click", "#clothing-selected-reset-button", function () {
     PlayButtonClickSound();
 
-    ResetColorPalette();
-
-    CURRENT_CLOTHING_CATEGORY_ITEM = 0;
-    SELECTED_ITEM_PALETTE_ID = 1;
-
-    SELECTED_ITEM_TINT1 = 0;
-    SELECTED_ITEM_TINT2 = 0;
-    SELECTED_ITEM_TINT3 = 0;
-
-    $("#currentNumber").text(CURRENT_CLOTHING_CATEGORY_ITEM + " / " + MAXIMUM_CLOTHING_CATEGORY_ITEMS);
-    $("#palette-currentNumber").text(SELECTED_ITEM_PALETTE_ID + " / " + SELECTED_ITEM_MAXIMUM_PALETTES);
-
-    $.post("http://tpz_clothing/load_selected_cloth", JSON.stringify({
-      id: CURRENT_CLOTHING_CATEGORY_ITEM,
-      palette: SELECTED_ITEM_PALETTE_ID,
-      a: SELECTED_ITEM_TINT1, b: SELECTED_ITEM_TINT2, c: SELECTED_ITEM_TINT3,
+    $.post("http://tpz_clothing/reset_outfit_category", JSON.stringify({
       actionType: 'RESET',
     }));
 
