@@ -65,6 +65,7 @@ Locales = {
 
     ['NOT_ENOUGH_MONEY']               = "You don't have enough money to buy this outfit component.",
     ['BOUGHT_CLOTH']                   = "Bought a cloth for %s dollars.",
+    ['WARDROBE_OUTIFT_EXIST']          = "~e~The specified outfit already exists.",
 
     ["coatclosed"]                     = "Coats Closed",
     ["coat"]                           = "Coats",
@@ -100,3 +101,4 @@ Locales = {
     ["ringlh"]                         = "Rings Left",    
 
 }
+
