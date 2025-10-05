@@ -8,5 +8,5 @@ exports('openWardrobe', function() OpenWardrobe() end)
 -- @return isBusy : returns a boolean (if player has open buying menu or wardrobes menu).
 exports('isBusy', function() 
     local PlayerData = GetPlayerData()
-    return PlayerData.IsBusy or PlayerData.HasNUIActive 
+    return PlayerData.HasMenuActive or PlayerData.HasNUIActive 
 end)
