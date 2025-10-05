@@ -64,6 +64,7 @@ Locales = {
     ['WARDROBE_MENU_EXIT_DESC']        = "",
 
     ['NOT_ENOUGH_MONEY']               = "You don't have enough money to buy this outfit component.",
+    ['BOUGHT_CLOTH']                   = "Bought a cloth for %s dollars.",
 
     ["coatclosed"]                     = "Coats Closed",
     ["coat"]                           = "Coats",
