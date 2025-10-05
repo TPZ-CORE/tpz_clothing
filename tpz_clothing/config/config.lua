@@ -1,7 +1,7 @@
 Config = {}
 
 Config.DevMode = false
-Config.Debug   = true
+Config.Debug   = false
 
 Config.Keys = { 
     ["A"] = 0x7065027D, ["D"] = 0xB4E465B4, ['R'] = 0xE30CD707, ['G'] = 0x760A9C6F, ["ENTER"] = 0xC7B5340A, 
@@ -213,4 +213,5 @@ function SendNotification(source, message, type, duration)
         TriggerClientEvent('tpz_core:sendBottomTipNotification', source, message, duration)
     end
   
+
 end
