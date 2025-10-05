@@ -9,7 +9,7 @@ local function DoesOutfitExistAlready(source, title)
 
     for _, outfit in pairs (Clothing[source].outfits) do
 
-        if tostring(outfit.name) == tostring(title) then
+        if string.lower(outfit.name) == string.lower(title) then
             return true
         end
 
@@ -64,7 +64,7 @@ AddEventHandler("tpz_clothing:server:wardrobes:update", function(actionType, dat
         local DoesOutfitExist = DoesOutfitExistAlready(_source, data[1])
 
         if DoesOutfitExist then
-            ----------------------------
+            SendNotification(_source, Locales["WARDROBE_OUTIFT_EXIST"], "error")
             return
         end
 
@@ -84,6 +84,8 @@ AddEventHandler("tpz_clothing:server:wardrobes:update", function(actionType, dat
 
         table.insert(Clothing[_source].outfits, insert_data )
         TriggerClientEvent("tpz_clothing:client:update", _source, { actionType = "INSERT_OUTFIT", data = insert_data })
+
+        SendNotification(_source, Locales['SAVED_OUTFIT'], "success")
 
     elseif actionType == "SET_DEFAULT" then
 
