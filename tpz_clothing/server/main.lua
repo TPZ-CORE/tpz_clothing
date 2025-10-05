@@ -107,6 +107,6 @@ AddEventHandler("tpz_clothing:server:buy", function(category, index, palette, cb
   end
 
   TriggerClientEvent('tpz_clothing:client:update', _source, { actionType = 'INSERT_PURCHASED_ITEM', data = { category, index, palette } })
- -- SendNotification(_source, string.format(Locales["BOUGHT_CLOTH"], OutfitData.Cost), "success")
+  SendNotification(_source, string.format(Locales["BOUGHT_CLOTH"], cost), "success")
 
 end)
