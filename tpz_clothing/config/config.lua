@@ -43,7 +43,7 @@ Config.Stores = {
 
     ["SAINT_DENIS"] = {
 
-        Title = 'Saint Denis - Clothing Store',
+        Title = 'Clothing Store',
         Coords = {x = 2555.755, y = -1170.66, z = 53.683, h = 78.336357116699},
 
         CameraCoords = { x = 2552.937, y = -1169.39, z = 54.0, h = 231.269088745, roty = 0.0, rotz = 245.0, fov = 60.0, zoom = 68.0},
@@ -77,7 +77,7 @@ Config.Stores = {
 
     ["BLACKWATER"] = { 
 
-        Title = 'Blackwater - Clothing Store',
+        Title = 'Clothing Store',
         Coords = {x = -759.990, y = -1294.08, z = 43.835, h = 104.9513473510},
 
         CameraCoords = { x = -762.637, y = -1293.84, z = 44.2, h = 253.674316406, roty = 0.0, rotz = 255.0, fov = 60.0, zoom = 68.0},
@@ -215,3 +215,4 @@ function SendNotification(source, message, type, duration)
   
 
 end
+
