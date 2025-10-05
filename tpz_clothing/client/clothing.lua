@@ -331,3 +331,50 @@ CheckBackOutfitCategoryPurchase = function(texture_id, palette)
     PREVIOUS_SELECTED_SKIN_COMP_DATA = nil
 
 end
+
+
+ResetOutfitByCategoryName = function()
+    local ped  = PlayerPedId()
+    local data = PREVIOUS_SELECTED_SKIN_COMP_DATA
+
+    modules.IsPedReadyToRender()
+
+    if data.id ~= 0 then
+
+        local outfitHash = Clothing[SELECTED_CATEGORY_TYPE][data.id][data.palette].hex
+
+        modules.ApplyShopItemToPed(outfitHash)
+
+        if data.drawable ~= 0 then
+
+            local palette = Config.clothesPalettes[data.palette]
+        
+            SetMetaPedTag(ped, data.drawable, data.albedo, data.normal, data.material, palette, data.tint0, data.tint1, data.tint2)
+        end
+        
+    else
+        RemoveTagFromMetaPed(ped, Config.ComponentCategories[SELECTED_CATEGORY_TYPE])
+    end
+
+    modules.UpdatePedVariation()
+
+    FixCategoryClothingProperly(SELECTED_CATEGORY_TYPE, PlayerSkin, ped)
+
+    SendNUIMessage( { 
+        action = 'setOutfitComponentInformation',
+        texture_id = data.id, 
+        current = data.palette, 
+		tint0   = data.tint0,
+		tint1   = data.tint1,
+		tint2   = data.tint2,
+        max_textures = #Clothing[SELECTED_CATEGORY_TYPE],
+        max = (Clothing[SELECTED_CATEGORY_TYPE][data.id] and #Clothing[SELECTED_CATEGORY_TYPE][data.id] or 1),
+        bought = 1,
+        bought_locale = Locales['NUI_SELECT_BOUGHT'],
+        buy_locale    = Locales['NUI_SELECT_BUY'],
+        not_for_sell_locale = Locales['NUI_SELECT_NOT_FOR_SELL'],
+        cost_locale   = string.format(Locales['NUI_SELECT_COST'], Locales[SELECTED_CATEGORY_TYPE], string.format("%.2f", Config.OutfitCosts[SELECTED_CATEGORY_TYPE]))
+    })
+
+
+end
