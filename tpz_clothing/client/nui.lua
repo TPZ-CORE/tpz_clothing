@@ -134,7 +134,6 @@ RegisterNUICallback('save', function()
             local skin = json.encode(GetPlayerSkinData())
 
             TriggerServerEvent("tpz_clothing:server:wardrobes:update", 'INSERT', { cb, skin } )
-            SendNotification(nil, Locales['SAVED_OUTFIT'], "success")
         end
 
     end) 
@@ -195,4 +194,8 @@ RegisterNUICallback('back', function(data)
 
     CheckBackOutfitCategoryPurchase(data.id, data.palette)
 
+end)
+
+RegisterNUICallback('reset_outfit_category', function()
+    ResetOutfitByCategoryName()
 end)
