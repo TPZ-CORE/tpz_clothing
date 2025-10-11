@@ -71,14 +71,14 @@ end
 function OpenWardrobe()
     local PlayerData = GetPlayerData()
 
-    PlayerData.HasMenuActive = true
-
-    TaskStandStill(PlayerPedId(), -1)
-
     if TPZ.GetTableLength(PlayerData.Clothing.outfits) <= 0 then
         SendNotification(nil, Locales['NO_OUTFITS_AVAILABLE'], "error")
+        TaskStandStill(PlayerPedId(), 1)
         return
     end
+
+    PlayerData.HasMenuActive = true
+    TaskStandStill(PlayerPedId(), -1)
 
     MenuData.CloseAll()
 
