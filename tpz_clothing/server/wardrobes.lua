@@ -87,12 +87,10 @@ AddEventHandler("tpz_clothing:server:wardrobes:update", function(actionType, dat
 
         SendNotification(_source, Locales['SAVED_OUTFIT'], "success")
 
-    elseif actionType == "SET_DEFAULT" then
+    elseif actionType == "SET_DEFAULT" or actionType == 'APPLY' then
 
         local OutfitData  = GetOutfitDataByDate(_source, data[1])
         local skinComp    = xPlayer.getOutfitComponents()
-
-        skinComp = json.decode(skinComp)
 
         -- if it's still a string (double encoded), decode again
         if type(skinComp) == "string" then
@@ -103,21 +101,25 @@ AddEventHandler("tpz_clothing:server:wardrobes:update", function(actionType, dat
 
             if OutfitData.comps[_category] ~= nil then
                 local category, data = _category, OutfitData.comps[_category]
-                skinComp[category] = data
+                skinComp[_category] = data
             else 
-                skinComp[category] = { id = 0, palette = 0, albedo = 0, material = 0, normal = 0, drawable = 0,  tint0 = 0, tint1 = 0, tint2 = 0 }
+                skinComp[_category] = { id = 0, palette = 0, albedo = 0, material = 0, normal = 0, drawable = 0,  tint0 = 0, tint1 = 0, tint2 = 0 }
             end
 
         end
 
-        local Parameters = {
-            ["charidentifier"] = xPlayer.getCharacterIdentifier(),
-            ['skinComp']       = json.encode(skinComp),
-        }
+        if actionType == 'SET_DEFAULT' then
 
-       exports.ghmattimysql:execute("UPDATE `characters` SET `skinComp` = @skinComp WHERE `charidentifier` = @charidentifier", Parameters)
+            local Parameters = {
+                ["charidentifier"] = xPlayer.getCharacterIdentifier(),
+                ['skinComp']       = json.encode(skinComp),
+            }
+    
+           exports.ghmattimysql:execute("UPDATE `characters` SET `skinComp` = @skinComp WHERE `charidentifier` = @charidentifier", Parameters)
 
-        xPlayer.setOutfitComponents(json.encode(skinComp))
+        end
+
+       xPlayer.setOutfitComponents(json.encode(skinComp))
 
     elseif actionType == "RENAME" then
 
