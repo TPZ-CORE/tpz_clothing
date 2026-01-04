@@ -24,13 +24,6 @@ local ToggleUI = function(display, data)
 
         PlayerData.HasNUIActive = false
     
-        for _, player in ipairs(GetActivePlayers()) do -- INVISIBILITY.
-            local ped = GetPlayerPed(player)
-            if DoesEntityExist(ped) and ped ~= PlayerPedId() then
-                SetEntityVisible(ped, true, true) -- Make them invisible
-            end
-        end
-
         Wait(2000)
         DoScreenFadeIn(2000)
 
@@ -82,13 +75,6 @@ function OpenCharacterCustomization(locationIndex)
             Wait(0)
 
             DisplayRadar(false)
-
-            for _, player in ipairs(GetActivePlayers()) do -- INVISIBILITY.
-				local ped = GetPlayerPed(player)
-				if DoesEntityExist(ped) and ped ~= PlayerPedId() then
-					SetEntityVisible(ped, false, false) -- Make them invisible
-				end
-			end
 
         end
     
@@ -199,3 +185,4 @@ end)
 RegisterNUICallback('reset_outfit_category', function()
     ResetOutfitByCategoryName()
 end)
+
