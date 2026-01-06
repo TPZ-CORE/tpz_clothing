@@ -199,7 +199,6 @@ end
 
 StartCam = function(x, y, z, rotx, roty, rotz, fov)
 
-	Citizen.InvokeNative(0x17E0198B3882C2CB, PlayerPedId())
 	DestroyAllCams(true)
 
     local cameraHandler = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", x, y, z, rotx, roty, rotz, fov, true, 0)
@@ -214,3 +213,4 @@ AdjustEntityPedHeading = function(amount)
 	CurrentHeading = CurrentHeading + amount
 	SetPedDesiredHeading(PlayerPedId(), CurrentHeading)
 end
+
