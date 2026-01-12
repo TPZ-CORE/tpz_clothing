@@ -23,6 +23,10 @@ local ToggleUI = function(display, data)
             exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.TeleportCoordsOnExit.x, LocationData.TeleportCoordsOnExit.y, LocationData.TeleportCoordsOnExit.z, LocationData.TeleportCoordsOnExit.h)
         end
 
+        if LocationData.Instance then
+        	TriggerServerEvent('tpz_core:instanceplayers', 0) 
+        end
+
         DestroyAllCams(true)
 
         SetNuiFocus(display, display)
@@ -91,6 +95,11 @@ function OpenCharacterCustomization(locationIndex)
 
     exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z, LocationData.Coords.h)
     
+    if LocationData.Instance then
+        local instanced = GetPlayerServerId(PlayerId()) + 456565
+        TriggerServerEvent('tpz_core:instanceplayers', math.floor(instanced)) 
+    end
+
     Wait(2000)
     DoScreenFadeIn(2000)
     ToggleUI(true)
