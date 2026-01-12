@@ -208,7 +208,7 @@ Citizen.CreateThread(function()
                 sleep = 0
 
                 local RGBA = locationConfig.ActionMarkers.RGBA
-                Citizen.InvokeNative(0x2A32FAA57B937173, 0x94FDAE17, locationConfig.Coords.x, locationConfig.Coords.y, locationConfig.Coords.z - 1.2, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.0, 0.7, RGBA.r, RGBA.g, RGBA.b, RGBA.a, false, true, 2, false, false, false, false)
+                Citizen.InvokeNative(0x2A32FAA57B937173, 0x94FDAE17, locationConfig.ActionMarkers.Coords.x, locationConfig.ActionMarkers.Coords.y, locationConfig.ActionMarkers.Coords.z - 1.2, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.0, 0.7, RGBA.r, RGBA.g, RGBA.b, RGBA.a, false, true, 2, false, false, false, false)
             end
 
             if distance <= locationConfig.ActionDistance then
