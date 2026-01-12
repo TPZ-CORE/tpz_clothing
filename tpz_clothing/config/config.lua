@@ -44,7 +44,12 @@ Config.Stores = {
     ["SAINT_DENIS"] = {
 
         Title = 'Clothing Store',
+
+        -- Coords are also teleporting the player in the correct position.
         Coords = {x = 2555.755, y = -1170.66, z = 53.683, h = 78.336357116699},
+
+        TeleportCoordsOnExit = false, -- set to false to disable (requires table form as Coords }
+        Instance = false, -- this must be true if player is on a specific room with others (like a characters room)
 
         CameraCoords = { x = 2552.937, y = -1169.39, z = 54.0, h = 231.269088745, roty = 0.0, rotz = 245.0, fov = 60.0, zoom = 68.0},
 
@@ -64,6 +69,7 @@ Config.Stores = {
 
             Distance = 10.0,
             RGBA = {r = 240, g = 230, b = 140, a = 255},
+            Coords = {x = 2555.755, y = -1170.66, z = 53.683 },
         },
 
         ActionDistance = 1.2,
@@ -78,7 +84,12 @@ Config.Stores = {
     ["BLACKWATER"] = { 
 
         Title = 'Clothing Store',
+
+        -- Coords are also teleporting the player in the correct position.
         Coords = {x = -759.990, y = -1294.08, z = 43.835, h = 104.9513473510},
+
+        TeleportCoordsOnExit = false, -- set to false to disable (requires table form as Coords }
+        Instance = false, -- this must be true if player is on a specific room with others (like a characters room)
 
         CameraCoords = { x = -762.637, y = -1293.84, z = 44.2, h = 253.674316406, roty = 0.0, rotz = 255.0, fov = 60.0, zoom = 68.0},
         
@@ -98,6 +109,7 @@ Config.Stores = {
 
             Distance = 10.0,
             RGBA = {r = 240, g = 230, b = 140, a = 255},
+            Coords = {x = -759.990, y = -1294.08, z = 43.835},
         },
 
         ActionDistance = 1.2,
