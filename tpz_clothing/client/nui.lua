@@ -2,6 +2,8 @@
 local CameraHandler   = {coords = nil, zoom = 0, z = 0 }
 local CurrentHeading  = 0
 
+local _LocationIndex  = nil
+
 -----------------------------------------------------------
 --[[ Local Functions ]]--
 -----------------------------------------------------------
@@ -14,6 +16,11 @@ local ToggleUI = function(display, data)
         while not IsScreenFadedOut() do
             Wait(50)
             DoScreenFadeOut(2000)
+        end
+
+        if LocationData.TeleportCoordsOnExit ~= false then
+            local LocationData = Config.Stores[_LocationIndex]
+            exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.TeleportCoordsOnExit.x, LocationData.TeleportCoordsOnExit.y, LocationData.TeleportCoordsOnExit.z, LocationData.TeleportCoordsOnExit.h)
         end
 
         DestroyAllCams(true)
@@ -49,6 +56,8 @@ function OpenCharacterCustomization(locationIndex)
     local PlayerData   = GetPlayerData()
     local LocationData = Config.Stores[locationIndex]
     
+    _LocationIndex = locationIndex
+
     while not IsScreenFadedOut() do
         Wait(50)
         DoScreenFadeOut(2000)
