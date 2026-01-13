@@ -84,9 +84,9 @@ function OpenCharacterCustomization(locationIndex)
 
 
     if LocationData.TeleportCoords ~= false then
-        exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z, LocationData.Coords.h)
-    else 
         exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.TeleportCoords.x, LocationData.TeleportCoords.y, LocationData.TeleportCoords.z, LocationData.TeleportCoords.h)
+    else 
+        exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z, LocationData.Coords.h)
     end
     
     if LocationData.Instance then
@@ -197,6 +197,7 @@ end)
 RegisterNUICallback('reset_outfit_category', function()
     ResetOutfitByCategoryName()
 end)
+
 
 
 
