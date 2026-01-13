@@ -47,7 +47,8 @@ Config.Stores = {
 
         -- Coords are also teleporting the player in the correct position.
         Coords = {x = 2555.755, y = -1170.66, z = 53.683, h = 78.336357116699},
-
+		
+        TeleportCoords = false, -- set to false to disable (requires table form as Coords)
         TeleportCoordsOnExit = false, -- set to false to disable (requires table form as Coords }
         Instance = false, -- this must be true if player is on a specific room with others (like a characters room)
 
@@ -88,6 +89,7 @@ Config.Stores = {
         -- Coords are also teleporting the player in the correct position.
         Coords = {x = -759.990, y = -1294.08, z = 43.835, h = 104.9513473510},
 
+        TeleportCoords = false, -- set to false to disable (requires table form as Coords)
         TeleportCoordsOnExit = false, -- set to false to disable (requires table form as Coords }
         Instance = false, -- this must be true if player is on a specific room with others (like a characters room)
 
@@ -227,4 +229,5 @@ function SendNotification(source, message, type, duration)
   
 
 end
+
 
