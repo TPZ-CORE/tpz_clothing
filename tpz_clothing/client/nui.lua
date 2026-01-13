@@ -82,18 +82,12 @@ function OpenCharacterCustomization(locationIndex)
 
     LoadClothingData() -- for loading player skin and all clothing properly.
 
-    Citizen.CreateThread(function()
-        
-        while PlayerData.HasNUIActive do 
-            Wait(0)
 
-            DisplayRadar(false)
-
-        end
-    
-    end)
-
-    exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z, LocationData.Coords.h)
+    if LocationData.TeleportCoords ~= false then
+        exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z, LocationData.Coords.h)
+    else 
+        exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.TeleportCoords.x, LocationData.TeleportCoords.y, LocationData.TeleportCoords.z, LocationData.TeleportCoords.h)
+    end
     
     if LocationData.Instance then
         local instanced = GetPlayerServerId(PlayerId()) + 456565
@@ -203,4 +197,5 @@ end)
 RegisterNUICallback('reset_outfit_category', function()
     ResetOutfitByCategoryName()
 end)
+
 
