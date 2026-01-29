@@ -348,7 +348,6 @@ ResetOutfitByCategoryName = function()
 
     FixCategoryClothingProperly(SELECTED_CATEGORY_TYPE, PlayerSkin, ped)
 
-    print(data.tint0, data.tint1, data.tint2)
     SendNUIMessage( { 
         action = 'setOutfitComponentInformation',
         texture_id = data.id, 
@@ -369,6 +368,5 @@ ResetOutfitByCategoryName = function()
 end
 
 SetDefaultOutfitCategory = function(data)
-    print(data.id, data.palette, data.tint0, data.tint1, data.tint2)
     TriggerServerEvent("tpz_clothing:server:set_default_category_outfit", SELECTED_CATEGORY_TYPE, data)
 end
