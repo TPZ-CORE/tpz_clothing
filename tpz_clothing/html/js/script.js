@@ -30,6 +30,8 @@ $(function() {
         $("#main").fadeIn(1000);
       }
 
+      IS_NUI_ACTIVE = item.enable;
+
     } else if (item.action == "set_management_section") {
 
       item.enable ? $(".management-section").fadeIn() : $(".management-section").fadeOut();
@@ -56,6 +58,7 @@ $(function() {
       $("#clothing-buy-back-button").text(item.locales['NUI_BACK_OUTFITS']);
       $("#clothing-selected-back-button").text(item.locales['NUI_BACK_OUTFITS']);
       $("#clothing-selected-reset-button").text(item.locales['NUI_RESET_OUTFIT_TYPE']);
+      $("#clothing-selected-set-default-button").text(item.locales['NUI_SET_DEFAULT']);
 
       $("#clothing-selected-select-tint-button").text(item.locales['NUI_SELECT_TINT']);
       $("#clothing-selected-component-title").text(item.locales['NUI_SELECT_COMPONENT']);
@@ -105,6 +108,14 @@ $(function() {
       if (item.bought == -1) {
         bought = item.not_for_sell_locale;
       }
+
+      if (item.bought == -1 || item.bought == 1 ){
+        $("#clothing-selected-buy-text").hide();
+        $("#clothing-selected-set-default-button").show();
+      }else{
+        $("#clothing-selected-buy-text").show();
+        $("#clothing-selected-set-default-button").hide();
+      }
       
       $("#clothing-selected-buy-button").text(bought);
 
@@ -129,6 +140,9 @@ $(function() {
       $("#clothing-selected-buy-button").css("text-decoration", "line-through");
       $("#clothing-selected-buy-button").css("color", "rgba(117, 117, 117, 1)");
 
+      $("#clothing-selected-buy-text").hide();
+      $("#clothing-selected-set-default-button").show();
+      
     } else if (item.action == "close") {
       CloseNUI();
     }
@@ -164,28 +178,6 @@ $(function() {
       updatePreview();
     })();
   });
-
-  function ResetColorPalette(){
-    const rNum = document.querySelector('.r-num');
-    const gNum = document.querySelector('.g-num');
-    const bNum = document.querySelector('.b-num');
-    const rRange = document.querySelector('.r-range');
-    const gRange = document.querySelector('.g-range');
-    const bRange = document.querySelector('.b-range');
-
-    const r = 0;
-    const g = 0;
-    const b = 0;
-    rRange.value = r; gRange.value = g; bRange.value = b;
-
-    rNum.value = 0;
-    gNum.value = 0;
-    bNum.value = 0;
-
-    SELECTED_ITEM_TINT1 = 0;
-    SELECTED_ITEM_TINT2 = 0;
-    SELECTED_ITEM_TINT3 = 0;
-  }
 
 
   /* ------------------------------------------------
@@ -363,9 +355,56 @@ $(function() {
 
   });
 
+  $("#main").on("click", "#clothing-selected-set-default-button", function () {
+    PlayButtonClickSound();
+
+    $.post("http://tpz_clothing/set_default", JSON.stringify({ 
+      id: CURRENT_CLOTHING_CATEGORY_ITEM, 
+      palette: SELECTED_ITEM_PALETTE_ID,
+      tint0: SELECTED_ITEM_TINT1,
+      tint1: SELECTED_ITEM_TINT2,
+      tint2: SELECTED_ITEM_TINT3,
+    }));
+  });
+
   $("#main").on("click", "#clothing-selected-buy-button", function () {
     PlayButtonClickSound();
     $.post("http://tpz_clothing/buy_item", JSON.stringify({ id: CURRENT_CLOTHING_CATEGORY_ITEM, palette: SELECTED_ITEM_PALETTE_ID }));
+  });
+
+  $(document).keydown(function (e) {
+
+    if (!IS_NUI_ACTIVE) { return; }
+    
+    switch (e.key) {
+      case "PageUp":
+
+        $.post('http://tpz_clothing/key_action', JSON.stringify({ action: "ZOOM_IN" }));
+        break;
+      case "PageDown":
+        $.post('http://tpz_clothing/key_action', JSON.stringify({ action: "ZOOM_OUT" }));
+        break;
+      case "ArrowUp":
+        $.post('http://tpz_clothing/key_action', JSON.stringify({ action: "UP_CAMERA" }));
+        break;
+      case "ArrowDown":
+        $.post('http://tpz_clothing/key_action', JSON.stringify({ action: "DOWN_CAMERA" }));
+        break;
+      case "ArrowLeft":
+        $.post('http://tpz_clothing/key_action', JSON.stringify({ action: "ROTATE_LEFT" }));
+        break;
+      case "ArrowRight":
+        $.post('http://tpz_clothing/key_action', JSON.stringify({ action: "ROTATE_RIGHT" }));
+        break;
+
+      case "x":
+        $.post('http://tpz_clothing/key_action', JSON.stringify({ action: "HANDS_UP_DOWN" }));
+        break;
+
+      case "X":
+        $.post('http://tpz_clothing/key_action', JSON.stringify({ action: "HANDS_UP_DOWN" }));
+        break;
+    }
   });
 
 });
