@@ -6,6 +6,7 @@ Locales = {
     ['NUI_SAVE_OUTFIT']                = "Save Current Outfit",
     ['NUI_BUY_OUTFITS']                = "Checkout Clothing",
     ['NUI_RESET_OUTFIT_TYPE']          = "Reset Outfit To Default",
+    ['NUI_SET_DEFAULT']                = "Set Default",
     ['NUI_SELECT_TINT']                = "Load Selected Tints",
     ['NUI_SELECT_COMPONENT']           = "Select Component",
     ['NUI_SELECT_PALETTE_TITLE']       = "Select Palette",
@@ -39,10 +40,10 @@ Locales = {
 
     ['ACCEPT_BUTTON']                  = "ACCEPT",
     ['DECLINE_BUTTON']                 = "DECLINE",
-    
-    ['SET_DEFAULT_OUTFIT_TYPE']        = "~t6~You have set this outfit item as default.",
+
     ['SAVED_OUTFIT']                   = "~t6~You have successfully saved an outfit.",
     ['REPLACED_OUTFIT']                = "~t6~You have replaced your default outfit.",
+    ['SET_DEFAULT_OUTFIT_TYPE']        = "~t6~You have set this outfit item as default.",
     ['RENAMED_OUTFIT']                 = "~t6~You have renamed an outfit",
     ['DELETED_OUTFIT']                 = "~t6~You have removed an outfit",
     ['SHARED_OUTFIT']                  = "~t6~You have shared an outfit",
@@ -102,5 +103,3 @@ Locales = {
     ["ringlh"]                         = "Rings Left",    
 
 }
-
-
