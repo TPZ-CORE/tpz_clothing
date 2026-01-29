@@ -40,19 +40,19 @@ Config.WardrobeMenuAlign = 'left'
 -----------------------------------------------------------
 
 Config.Stores = {
-
+    
     ["SAINT_DENIS"] = {
 
         Title = 'Clothing Store',
 
-        -- Coords are also teleporting the player in the correct position.
+        -- The store coords - also for teleporting the player for the proper location.
         Coords = {x = 2555.755, y = -1170.66, z = 53.683, h = 78.336357116699},
-		
-        TeleportCoords = false, -- set to false to disable (requires table form as Coords)
-        TeleportCoordsOnExit = false, -- set to false to disable (requires table form as Coords }
-        Instance = false, -- this must be true if player is on a specific room with others (like a characters room)
 
-        CameraCoords = { x = 2552.937, y = -1169.39, z = 54.0, h = 231.269088745, roty = 0.0, rotz = 245.0, fov = 60.0, zoom = 68.0},
+        TeleportCoords = { x = 2799.624, y = -1169.67, z = 46.928, h = 248.2420959 }, -- set to false to disable (requires table form as Coords)
+        TeleportCoordsOnExit = {x = 2555.755, y = -1170.66, z = 53.683, h = 78.336357116699}, -- set to false to disable (requires table form as Coords }
+        Instance = true, -- this must be true if player is on a specific room with others (like a characters room)
+
+        CameraCoords = { x = 2800.740, y = -1170.24, z = 48.228, h = 59.94042587, roty = 0.0, rotz = 60.0, fov = 60.0, zoom = 70.0},
 
         BlipData = {
             Enabled = true,
@@ -69,32 +69,34 @@ Config.Stores = {
             Enabled = true,
 
             Distance = 10.0,
-            RGBA = {r = 240, g = 230, b = 140, a = 255},
-            Coords = {x = 2555.755, y = -1170.66, z = 53.683 },
+            RGBA = {r = 255, g = 255, b = 255, a = 55},
+            Coords = {x = 2555.755, y = -1170.66, z = 53.683, h = 78.336357116699},
+        },
+
+        Lighting = {
+            Coords = vector3(2800.194, -1170.01, 47.928),
+            RGB    = {R = 255, G = 255, B = 255 },
+            Range  = 5.0,
+            Intensity = 500.0,
         },
 
         ActionDistance = 1.2,
-
-        -- (!) The names must be the same as it is from @Config.Categories.
-        CameraViews = {
-            ['Hat'] = { z_increase = 0.3, z_decrease = 0, zoom = 38.0 },
-        },
         
     },
-
+    
     ["BLACKWATER"] = { 
 
         Title = 'Clothing Store',
 
-        -- Coords are also teleporting the player in the correct position.
+        -- The store coords - also for teleporting the player for the proper location.
         Coords = {x = -759.990, y = -1294.08, z = 43.835, h = 104.9513473510},
 
-        TeleportCoords = false, -- set to false to disable (requires table form as Coords)
-        TeleportCoordsOnExit = false, -- set to false to disable (requires table form as Coords }
-        Instance = false, -- this must be true if player is on a specific room with others (like a characters room)
-
-        CameraCoords = { x = -762.637, y = -1293.84, z = 44.2, h = 253.674316406, roty = 0.0, rotz = 255.0, fov = 60.0, zoom = 68.0},
+        TeleportCoords = { x = 2799.624, y = -1169.67, z = 46.928, h = 248.2420959 }, -- set to false to disable (requires table form as Coords)
+        TeleportCoordsOnExit = {x = -759.990, y = -1294.08, z = 43.835, h = 104.9513473510}, -- set to false to disable (requires table form as Coords }
+        Instance = true, -- this must be true if player is on a specific room with others (like a characters room)
         
+        CameraCoords = { x = -762.637, y = -1293.84, z = 44.2, h = 253.674316406, roty = 0.0, rotz = 255.0, fov = 60.0, zoom = 68.0},
+                
         BlipData = {
             Enabled = true,
             Title   = "Clothing Store",
@@ -110,8 +112,15 @@ Config.Stores = {
             Enabled = true,
 
             Distance = 10.0,
-            RGBA = {r = 240, g = 230, b = 140, a = 255},
-            Coords = {x = -759.990, y = -1294.08, z = 43.835},
+            RGBA = {r = 255, g = 255, b = 255, a = 55},
+            Coords = {x = -759.990, y = -1294.08, z = 43.835, h = 104.9513473510},
+        },
+
+        Lighting = {
+            Coords = vector3(2800.194, -1170.01, 47.928),
+            RGB    = {R = 255, G = 255, B = 255 },
+            Range  = 5.0,
+            Intensity = 500.0,
         },
 
         ActionDistance = 1.2,
@@ -141,6 +150,8 @@ Config.Wardrobes = {
 
             Distance = 5.0,
             RGBA = {r = 240, g = 230, b = 140, a = 255},
+            Coords = {x = 1323.890, y = -1288.67, z = 77.021, h = 0},
+
         },
 
         ActionDistance = 1.2,
@@ -161,6 +172,7 @@ Config.Wardrobes = {
 
             Distance = 5.0,
             RGBA = {r = 240, g = 230, b = 140, a = 255},
+            Coords = {x = 2555.864, y = -1160.55, z = 53.701, h = 181.045257568},
         },
 
         ActionDistance = 1.2,
@@ -181,6 +193,7 @@ Config.Wardrobes = {
 
             Distance = 5.0,
             RGBA = {r = 240, g = 230, b = 140, a = 255},
+            Coords = {x = -767.94,y = -1294.95,z = 43.84, h = 0},
         },
 
         ActionDistance = 1.2,
@@ -201,6 +214,7 @@ Config.Wardrobes = {
 
             Distance = 5.0,
             RGBA = {r = 240, g = 230, b = 140, a = 255},
+            Coords = {x = -1794.00, y = -394.872, z = 160.33},
         },
 
         ActionDistance = 1.2,
@@ -227,7 +241,4 @@ function SendNotification(source, message, type, duration)
         TriggerClientEvent('tpz_core:sendBottomTipNotification', source, message, duration)
     end
   
-
 end
-
-
