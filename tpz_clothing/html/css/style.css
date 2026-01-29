@@ -81,7 +81,7 @@ body {
 
 #clothing-close-button, #clothing-save-button, #clothing-buy-button, 
 #clothing-buy-back-button, #clothing-selected-back-button, #clothing-selected-select-tint-button,
-#clothing-selected-reset-button, #clothing-selected-buy-button {
+#clothing-selected-reset-button, #clothing-selected-set-default-button, #clothing-selected-buy-button {
   position: absolute;
   transform: translate(-50%, 0);
   color: #e2e2e2;
@@ -127,6 +127,14 @@ body {
   padding-top: 0.1vw;
 }
 
+#clothing-selected-set-default-button {
+  color: rgb(48, 98, 173);
+  font-size: 0.9vw;
+  height: 1.5vw;
+  margin-top: 30.5%;
+  padding-top: 0.1vw;
+}
+
 #clothing-selected-buy-button {
   color: rgb(192, 170, 47);
   margin-top: 33%;
@@ -157,7 +165,7 @@ body {
 
 #clothing-close-button:hover, #clothing-save-button:hover, #clothing-buy-button:hover, 
 #clothing-buy-back-button:hover, #clothing-selected-back-button:hover, #clothing-selected-select-tint-button:hover,
-#clothing-selected-reset-button:hover {
+#clothing-selected-reset-button:hover, #clothing-selected-set-default-button:hover {
   opacity: 0.7;
 }
 
