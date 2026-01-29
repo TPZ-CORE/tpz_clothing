@@ -133,6 +133,11 @@ function LoadClothingData(targetSkinComp)
     return cb
 end
 
+
+function GetSelectedCategoryType()
+    return SELECTED_CATEGORY_TYPE
+end
+
 -----------------------------------------------------------
 --[[ Clothing Functions ]]--
 -----------------------------------------------------------
@@ -141,23 +146,6 @@ LoadSelectedCategoryClothingData = function(category, title)
     local PlayerData    = GetPlayerData()
     local LocationIndex = GetPlayerData().LocationIndex
     SELECTED_CATEGORY_TYPE = string.lower(category)
-
-    if Config.Stores[LocationIndex].CameraViews[category] then 
-        local CameraHandler = GetCameraHandler()
-        local NewCameraData = Config.Stores[LocationIndex].CameraViews[category]
-
-        if NewCameraData.z_increase > 0 then 
-            CameraHandler.coords.z = CameraHandler.coords.z + NewCameraData.z_increase
-
-        elseif NewCameraData.z_decrease > 0 then 
-            CameraHandler.coords.z = CameraHandler.coords.z - NewCameraData.z_decrease
-        end
-
-        CameraHandler.zoom = NewCameraData.zoom
-        DestroyAllCams(true)
-        StartCam(CameraHandler.coords.x, CameraHandler.coords.y, CameraHandler.coords.z, CameraHandler.coords.rotx, CameraHandler.coords.roty, CameraHandler.coords.rotz, CameraHandler.coords.zoom)
-    
-    end
 
 	local componentData = PlayerSkin[category] or { id = 0, palette = 1, tint0 = 0, tint1 = 0, tint2 = 0 }
 	local title = GetLabelNameFromClothingCategory(category)
@@ -360,6 +348,7 @@ ResetOutfitByCategoryName = function()
 
     FixCategoryClothingProperly(SELECTED_CATEGORY_TYPE, PlayerSkin, ped)
 
+    print(data.tint0, data.tint1, data.tint2)
     SendNUIMessage( { 
         action = 'setOutfitComponentInformation',
         texture_id = data.id, 
@@ -377,4 +366,9 @@ ResetOutfitByCategoryName = function()
     })
 
 
+end
+
+SetDefaultOutfitCategory = function(data)
+    print(data.id, data.palette, data.tint0, data.tint1, data.tint2)
+    TriggerServerEvent("tpz_clothing:server:set_default_category_outfit", SELECTED_CATEGORY_TYPE, data)
 end
