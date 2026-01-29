@@ -8,6 +8,8 @@ let SELECTED_ITEM_MAXIMUM_PALETTES  = 1;
 
 let HAS_COOLDOWN = false;
 
+let IS_NUI_ACTIVE = false
+
 document.addEventListener("DOMContentLoaded", function () {
 
   $("#main").fadeOut();
