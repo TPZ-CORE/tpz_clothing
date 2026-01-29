@@ -68,6 +68,54 @@ local metaPedCategoryTags = {
  General
 ]]---------------------------------------------------------
 
+local function GetMetaPedAssetGuids(ped, index)
+    return Citizen.InvokeNative(0xA9C28516A6DC9D56, ped, index, Citizen.PointerValueInt(), Citizen.PointerValueInt(), Citizen.PointerValueInt(), Citizen.PointerValueInt())
+end
+
+local function GetMetaPedAssetTint(ped, index)
+    return Citizen.InvokeNative(0xE7998FEC53A33BBE, ped, index, Citizen.PointerValueInt(), Citizen.PointerValueInt(), Citizen.PointerValueInt(), Citizen.PointerValueInt())
+end
+
+local function GetComponentIndexByCategory(ped, category)
+    local modules = exports.tpz_core:getCoreAPI().modules()
+
+    ped = ped or PlayerPedId()
+    local numComponents = modules.GetNumComponentsInPed(ped)
+    for i = 0, numComponents - 1, 1 do
+        local componentCategory = modules.GetCategoryOfComponentAtIndex(ped, i)
+
+        if string.lower(metaPedCategoryTags.Tags[componentCategory]) == string.lower(category) then
+            return i
+        end
+    end
+    return nil
+end
+
+function toPlural(word)
+    if word:sub(-1) ~= "s" then
+        return word .. "s"
+    end
+    return word
+end
+
+
+function GetMetaPedData(category)
+    local playerPed = PlayerPedId()
+
+    --category = toPlural(category)
+
+    local componentIndex = GetComponentIndexByCategory(playerPed, category)
+
+    if not componentIndex then
+        return nil
+    end
+
+    local drawable, albedo, normal, material = GetMetaPedAssetGuids(playerPed, componentIndex)
+    local palette, tint0, tint1, tint2 = GetMetaPedAssetTint(playerPed, componentIndex)
+
+    return { drawable = drawable, albedo = albedo, normal = normal, material = material, palette = palette, tint0 = tint0, tint1 = tint1, tint2 = tint2 }
+end
+
 local function SetTextureOutfitTints(ped, category, data)
     local palette = Config.clothesPalettes[data.palette]
     Citizen.InvokeNative(0x4EFC1F8FF1AD94DE, ped, joaat(category), palette, data.tint0, data.tint1, data.tint2)
@@ -156,6 +204,11 @@ function FixCategoryClothingProperly(category, skinData, ped)
             SetTextureOutfitTints(entityPed, 'shirts_full', item)
         end
 
+    end
+
+    if category == 'mask' or category == 'masks_large' then 
+        exports.tpz_makeup:ReloadAllTextures()
+        exports.tpz_characters:ReloadGroom()
     end
 
 end
