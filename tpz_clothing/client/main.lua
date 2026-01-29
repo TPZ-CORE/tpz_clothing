@@ -145,8 +145,6 @@ Citizen.CreateThread(function()
 
             end
 
-            if isAllowed then
-
                 local distance = #(coords - vector3(locationConfig.Coords.x, locationConfig.Coords.y, locationConfig.Coords.z))
 
                 if locationConfig.ActionMarkers.Enabled and distance <= locationConfig.ActionMarkers.Distance then
@@ -169,13 +167,11 @@ Citizen.CreateThread(function()
                         PlayerData.LocationIndex = storeId
 
                         OpenCharacterCustomization(storeId)
-    
                         Wait(1000)
                     end
     
                 end
 
-            end
 
         end
 
@@ -220,6 +216,7 @@ Citizen.CreateThread(function()
                 PromptSetActiveGroupThisFrame(Prompts, label)
 
                 if PromptHasHoldModeCompleted(PromptsList) then
+                 
                     OpenWardrobe()
                     Wait(1000)
                 end
@@ -270,5 +267,3 @@ CreateThread(function()
         Wait(sleep)
     end
 end)
-
-
