@@ -39,7 +39,8 @@ Locales = {
 
     ['ACCEPT_BUTTON']                  = "ACCEPT",
     ['DECLINE_BUTTON']                 = "DECLINE",
-
+    
+    ['SET_DEFAULT_OUTFIT_TYPE']        = "~t6~You have set this outfit item as default.",
     ['SAVED_OUTFIT']                   = "~t6~You have successfully saved an outfit.",
     ['REPLACED_OUTFIT']                = "~t6~You have replaced your default outfit.",
     ['RENAMED_OUTFIT']                 = "~t6~You have renamed an outfit",
@@ -101,4 +102,5 @@ Locales = {
     ["ringlh"]                         = "Rings Left",    
 
 }
+
 
