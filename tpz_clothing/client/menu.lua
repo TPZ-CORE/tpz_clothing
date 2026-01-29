@@ -192,7 +192,7 @@ function OpenSelectedWardrobeOutfitById(outfitId, outfitName)
                 end
 
             end
-                
+
             TriggerServerEvent("tpz_clothing:server:wardrobes:update", 'APPLY', { outfitId })
 
         elseif data.current.value == 'rename' then
