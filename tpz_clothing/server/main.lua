@@ -110,3 +110,44 @@ AddEventHandler("tpz_clothing:server:buy", function(category, index, palette, cb
   SendNotification(_source, string.format(Locales["BOUGHT_CLOTH"], cost), "success")
 
 end)
+
+
+RegisterServerEvent("tpz_clothing:server:set_default_category_outfit")
+AddEventHandler("tpz_clothing:server:set_default_category_outfit", function(category, data)
+  local _source = source 
+  local xPlayer = TPZ.GetPlayer(_source)
+
+  local skinComp = xPlayer.getOutfitComponents()
+  
+  -- if it's still a string (double encoded), decode again
+  if type(skinComp) == "string" then
+    skinComp = json.decode(skinComp)
+  end
+
+  if skinComp[category] == nil then 
+    skinComp[category] = {}
+  end
+
+  skinComp[category] = {
+    id               = data.id,
+    palette          = data.palette,
+    normal           = data.normal,
+    material         = data.material,
+    drawable         = data.drawable,
+    albedo           = data.albedo,
+    tint0            = data.tint0,
+    tint1            = data.tint1,
+    tint2            = data.tint2,
+  }
+
+  local Parameters = {
+    ["charidentifier"] = xPlayer.getCharacterIdentifier(),
+    ['skinComp']       = json.encode(skinComp),
+  } 
+  
+  exports.ghmattimysql:execute("UPDATE `characters` SET `skinComp` = @skinComp WHERE `charidentifier` = @charidentifier", Parameters)
+  
+  xPlayer.setOutfitComponents(json.encode(skinComp))
+
+  SendNotification(_source, Locales["SET_OUTFIT_AS_DEFAULT"], "success")
+end)
