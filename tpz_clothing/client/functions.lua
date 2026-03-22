@@ -1,6 +1,6 @@
 
-local WardrobePrompts, StoreLocationPrompts, StorePrompts = GetRandomIntInRange(0, 0xffffff), GetRandomIntInRange(0, 0xffffff), GetRandomIntInRange(0, 0xffffff)
-local WardrobePromptsList, StoreLocationPromptsList, StorePromptsList = {}, {}, {}
+local WardrobePrompts, StoreLocationPrompts, ActionPrompts = GetRandomIntInRange(0, 0xffffff), GetRandomIntInRange(0, 0xffffff), GetRandomIntInRange(0, 0xffffff)
+local WardrobePromptsList, StoreLocationPromptsList, ActionPromptsList = {}, {}, {}
 
 --[[-------------------------------------------------------
  Handlers
@@ -13,13 +13,7 @@ AddEventHandler("onResourceStop", function(resourceName)
 
     Citizen.InvokeNative(0x00EDE88D4D13CF59, WardrobePrompts) -- UiPromptDelete
     Citizen.InvokeNative(0x00EDE88D4D13CF59, StoreLocationPrompts) -- UiPromptDelete
-    Citizen.InvokeNative(0x00EDE88D4D13CF59, StorePrompts) -- UiPromptDelete
-
-    local PlayerData = GetPlayerData()
-
-    if PlayerData.IsBusy then
-        DestroyAllCams(true)
-    end
+    Citizen.InvokeNative(0x00EDE88D4D13CF59, ActionPrompts) -- UiPromptDelete
 
     for i, v in pairs(Config.Stores) do
         if v.BlipHandle then
@@ -89,38 +83,43 @@ function GetStoreLocationPromptData()
     return StoreLocationPrompts, StoreLocationPromptsList
 end
 
-CreateStorePrompts = function()
+RegisterStoreActionPrompts = function()
 
     for index, tprompt in pairs (Config.CameraAdjustmentPrompts) do
 
-        local str = tprompt.label
-        local keyPress  = Config.Keys[tprompt.key1]
-        local keyPress2 = Config.Keys[tprompt.key2]
-
+        local str      = tpromptlabel
+        local keyPress = Config.Keys[tprompt.key1]
+    
         local dPrompt = PromptRegisterBegin()
         PromptSetControlAction(dPrompt, keyPress)
-
-        if keyPress2 then
-            PromptSetControlAction(dPrompt, keyPress2)
-        end
-        
         str = CreateVarString(10, 'LITERAL_STRING', str)
+
+        PromptSetStandardMode(dPrompt, 0)
+        PromptSetHoldMode(dPrompt, false)
+
+        if tprompt.key2 then 
+            PromptSetControlAction(dPrompt, Config.Keys[tprompt.key2])
+        else 
+            PromptSetStandardMode(dPrompt, 1)
+            PromptSetHoldMode(dPrompt, 1000)
+        end
+
         PromptSetText(dPrompt, str)
         PromptSetEnabled(dPrompt, 1)
         PromptSetVisible(dPrompt, 1)
-        PromptSetStandardMode(dPrompt, 0)
-        PromptSetHoldMode(dPrompt, false)
-        PromptSetGroup(dPrompt, StorePrompts)
+
+        PromptSetGroup(dPrompt, ActionPrompts)
         Citizen.InvokeNative(0xC5F428EE08FA7F2C, dPrompt, true)
         PromptRegisterEnd(dPrompt)
+
     
-        table.insert(StorePromptsList, {prompt = dPrompt, type = index})
+        table.insert(ActionPromptsList, {prompt = dPrompt, type = tprompt.Type})
     end
 
 end
 
-function GetStorePromptData()
-    return StorePrompts, StorePromptsList
+function GetStoreActionsPromptData()
+    return ActionPrompts, ActionPromptsList
 end
 
 --[[-------------------------------------------------------
@@ -213,4 +212,3 @@ AdjustEntityPedHeading = function(amount)
 	CurrentHeading = CurrentHeading + amount
 	SetPedDesiredHeading(PlayerPedId(), CurrentHeading)
 end
-
