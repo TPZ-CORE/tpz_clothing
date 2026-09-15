@@ -23,6 +23,15 @@ local ToggleUI = function(display, data)
         local LocationData = Config.Stores[GetPlayerData().LocationIndex]
 
         if LocationData.TeleportCoordsOnExit ~= false then
+
+            SetFocusPosAndVel(LocationData.TeleportCoordsOnExit.x, LocationData.TeleportCoordsOnExit.y, LocationData.TeleportCoordsOnExit.z, 0.0, 0.0, 0.0)
+
+            -- Wait for the collision to load at the camera position
+            while not (Citizen.InvokeNative(0xDA8B2EAF29E872E2, LocationData.TeleportCoordsOnExit.x, LocationData.TeleportCoordsOnExit.y, LocationData.TeleportCoordsOnExit.z)) do -- _HAS_COLLISION_LOADED_AT_COORD
+                SetFocusPosAndVel(LocationData.TeleportCoordsOnExit.x, LocationData.TeleportCoordsOnExit.y, LocationData.TeleportCoordsOnExit.z,  0.0, 0.0, 0.0)
+                Wait(1)
+            end
+
             exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.TeleportCoordsOnExit.x, LocationData.TeleportCoordsOnExit.y, LocationData.TeleportCoordsOnExit.z, LocationData.TeleportCoordsOnExit.h)
         end
 
@@ -71,9 +80,19 @@ function OpenCharacterCustomization(locationIndex)
 
     Wait(2000)
 
+
     CurrentHeading = LocationData.Coords.h
 
     local cameraCoords = LocationData.CameraCoords
+
+    SetFocusPosAndVel(cameraCoords.x, cameraCoords.y, cameraCoords.z, 0.0, 0.0, 0.0)
+
+    -- Wait for the collision to load at the camera position
+    while not (Citizen.InvokeNative(0xDA8B2EAF29E872E2, cameraCoords.x, cameraCoords.y, cameraCoords.z)) do -- _HAS_COLLISION_LOADED_AT_COORD
+        SetFocusPosAndVel(cameraCoords.x, cameraCoords.y, cameraCoords.z,  0.0, 0.0, 0.0)
+        Wait(1)
+    end
+    
     StartCam(cameraCoords.x, cameraCoords.y, cameraCoords.z, cameraCoords.rotx, cameraCoords.roty, cameraCoords.rotz, cameraCoords.zoom)
     CameraHandler.coords = { x = cameraCoords.x, y = cameraCoords.y, z = cameraCoords.z, rotx = cameraCoords.rotx, roty = cameraCoords.roty, rotz = cameraCoords.rotz, fov = cameraCoords.fov }
     CameraHandler.z    = cameraCoords.z
@@ -89,8 +108,10 @@ function OpenCharacterCustomization(locationIndex)
     LoadClothingData() -- for loading player skin and all clothing properly.
 
     if LocationData.TeleportCoords ~= false then
+
         exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.TeleportCoords.x, LocationData.TeleportCoords.y, LocationData.TeleportCoords.z, LocationData.TeleportCoords.h)
     else 
+
         exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z, LocationData.Coords.h)
     end
 
@@ -109,7 +130,7 @@ end
 function CloseNUI()
     if GetPlayerData().HasNUIActive then SendNUIMessage({action = 'close'}) end
 end
-
+DoScreenFadeIn(2000)
 -----------------------------------------------------------
 --[[ Events ]]--
 -----------------------------------------------------------
@@ -128,6 +149,15 @@ AddEventHandler("onResourceStop", function(resourceName)
         local LocationData = Config.Stores[PlayerData.LocationIndex]
 
         if LocationData.TeleportCoords ~= false then
+
+            SetFocusPosAndVel(LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z, 0.0, 0.0, 0.0)
+
+            -- Wait for the collision to load at the camera position
+            while not (Citizen.InvokeNative(0xDA8B2EAF29E872E2, LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z)) do -- _HAS_COLLISION_LOADED_AT_COORD
+                SetFocusPosAndVel(LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z,  0.0, 0.0, 0.0)
+                Wait(1)
+            end
+
           exports.tpz_core:getCoreAPI().TeleportToCoords(LocationData.Coords.x, LocationData.Coords.y, LocationData.Coords.z, LocationData.Coords.h)
         end
 
