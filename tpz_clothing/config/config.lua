@@ -1,6 +1,6 @@
 Config = {}
 
-Config.DevMode = false
+Config.DevMode = true
 Config.Debug   = false
 
 Config.Keys = { 
@@ -41,6 +41,48 @@ Config.WardrobeMenuAlign = 'left'
 
 Config.Stores = {
     
+    ["VALENTINE"] = {
+
+        Title = 'Clothing Store',
+
+        -- The store coords - also for teleporting the player for the proper location.
+        Coords = {x = -297.524, y = 808.4002, z = 118.24, h = 241.160552978},
+
+        TeleportCoords = { x = 2799.624, y = -1169.67, z = 46.928, h = 248.2420959 }, -- set to false to disable (requires table form as Coords)
+        TeleportCoordsOnExit = {x = -297.524, y = 808.4002, z = 118.24, h = 241.160552978}, -- set to false to disable (requires table form as Coords)
+        Instance = true, -- this must be true if player is on a specific room with others (like a characters room)
+
+        CameraCoords = { x = 2800.740, y = -1170.24, z = 48.228, h = 59.94042587, roty = 0.0, rotz = 60.0, fov = 60.0, zoom = 70.0},
+
+        BlipData = {
+            Enabled = true,
+            Title   = "Clothing Store",
+            Sprite  = 1195729388,
+
+            OpenBlipModifier = 'BLIP_MODIFIER_MP_COLOR_32',
+            DisplayClosedHours = { Enabled = true, Sprite = 1195729388, BlipModifier = "BLIP_MODIFIER_MP_COLOR_2" },
+        },
+
+        Hours = { Allowed = true, Opening = 7, Closing = 23 },
+
+        ActionMarkers = {
+            Enabled = true,
+
+            Distance = 10.0,
+            RGBA = {r = 255, g = 255, b = 255, a = 55},
+            Coords = {x = -297.524, y = 808.4002, z = 118.24, h = 241.160552978},
+        },
+
+        Lighting = {
+            Coords = vector3(2800.194, -1170.01, 47.928),
+            RGB    = {R = 255, G = 255, B = 255 },
+            Range  = 5.0,
+            Intensity = 500.0,
+        },
+
+        ActionDistance = 1.2,
+    },
+
     ["SAINT_DENIS"] = {
 
         Title = 'Clothing Store',
@@ -95,7 +137,7 @@ Config.Stores = {
         TeleportCoordsOnExit = {x = -759.990, y = -1294.08, z = 43.835, h = 104.9513473510}, -- set to false to disable (requires table form as Coords }
         Instance = true, -- this must be true if player is on a specific room with others (like a characters room)
         
-        CameraCoords = { x = -762.637, y = -1293.84, z = 44.2, h = 253.674316406, roty = 0.0, rotz = 255.0, fov = 60.0, zoom = 68.0},
+        CameraCoords = { x = 2800.740, y = -1170.24, z = 48.228, h = 59.94042587, roty = 0.0, rotz = 60.0, fov = 60.0, zoom = 70.0},
                 
         BlipData = {
             Enabled = true,
@@ -134,6 +176,27 @@ Config.Stores = {
 
 -- Public wardrobe locations that can be found on the world map. 
 Config.Wardrobes = {
+
+    ['VALENTINE'] = {
+
+        Coords = {x = -297.304, y = 804.4727, z = 119.24, h = 88.28800201},
+
+        BlipData = {
+            Enabled = true,
+            Title   = "Public Wardrobe",
+            Sprite  = 1496995379,
+        },
+
+        ActionMarkers = {
+            Enabled = true,
+
+            Distance = 5.0,
+            RGBA = {r = 240, g = 230, b = 140, a = 255},
+            Coords = {x = -297.304, y = 804.4727, z = 119.24, h = 88.28800201},
+        },
+
+        ActionDistance = 1.2,
+    },
 
     ['RHODES'] = {
 
