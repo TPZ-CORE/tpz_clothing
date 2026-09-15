@@ -1,6 +1,6 @@
 Config = {}
 
-Config.DevMode = true
+Config.DevMode = false
 Config.Debug   = false
 
 Config.Keys = { 
